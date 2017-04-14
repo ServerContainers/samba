@@ -3,3 +3,7 @@
 
 # Source Code
 Check the following link for a new version: https://download.samba.org/pub/samba/stable/
+
+# Links
+https://wiki.samba.org/index.php/Samba_AD_DC_Port_Usage
+
