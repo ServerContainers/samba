@@ -60,6 +60,13 @@ RUN export samba_version=4.6.2 \
  \
  && rm -rf samba-${samba_version}
 
+VOLUME ["/shares"]
+
 EXPOSE 139 445
+
+COPY scripts /usr/local/bin/
+
+HEALTHCHECK CMD ["docker-healthcheck.sh"]
+ENTRYPOINT ["entrypoint.sh"]
 
 CMD [ "smbd", "-F", "-S" ]
