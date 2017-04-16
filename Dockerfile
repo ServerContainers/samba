@@ -51,7 +51,7 @@ RUN export samba_version=4.6.2 \
  && rm samba-${samba_version}.tar.gz \
  \
  && cd samba-${samba_version} \
- && ./configure --prefix=/ \
+ && ./configure --prefix= \
  && make \
  && make install \
  \
@@ -62,4 +62,4 @@ RUN export samba_version=4.6.2 \
 
 EXPOSE 139 445
 
-CMD [ "/sbin/smbd", "-F", "-S" ]
+CMD [ "smbd", "-F", "-S" ]
