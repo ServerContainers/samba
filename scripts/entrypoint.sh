@@ -37,23 +37,33 @@ if [ ! -f "$INITALIZED" ]; then
   ##
 cat > /etc/smb.conf <<EOF
 [global]
+   server role = standalone server
+
    workgroup = $SAMBA_CONF_WORKGROUP
    server string = $SAMBA_CONF_SERVER_STRING
 
-   server role = standalone server
+   map to guest = $SAMBA_CONF_MAP_TO_GUEST
 
    dns proxy = no
 
    log file = /dev/stdout
 
+EOF
+
+  ##
+  # SAMBA Configuration (Password Sync)
+  ##
+  if [ ! -z ${SAMBA_CONF_ENABLE_PASSWORD_SYNC+x} ]
+  then
+    echo ">> SAMBA CONFIG: \$SAMBA_CONF_ENABLE_PASSWORD_SYNC is set, enabling password sync"
+cat >> /etc/smb.conf <<EOF
    unix password sync = yes
    passwd program = /usr/bin/passwd %u
    passwd chat = *Enter\snew\s*\spassword:* %n\n *Retype\snew\s*\spassword:* %n\n *password\supdated\ssuccessfully* .
    pam password change = yes
 
-   map to guest = $SAMBA_CONF_MAP_TO_GUEST
-
 EOF
+  fi
 
   ##
   # USER ACCOUNTS
