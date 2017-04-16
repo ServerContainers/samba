@@ -38,3 +38,34 @@ to restrict access of volumes you can add the following to your samba volume con
 * https://wiki.samba.org/index.php/Samba_AD_DC_Port_Usage
 * https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Standalone_Server
 * https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html
+
+
+# Avahi / Zeroconf
+
+## Infos:
+
+* https://linux.die.net/man/5/avahi.service
+
+You can't proxy the zeroconf inside the container to the outside, since this would need routing and forwarding to your internal docker0 interface from outside.
+
+You can just expose the needed ports to the docker hosts port and install avahi.
+After that just add a new service which fits to your config.
+
+### Example Configuration
+
+__/etc/avahi/services/smb.service__
+
+    <?xml version="1.0" standalone='no'?>
+    <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+    <service-group>
+     <name replace-wildcards="yes">%h</name>
+     <service>
+       <type>_smb._tcp</type>
+       <port>445</port>
+     </service>
+     <service>
+       <type>_device-info._tcp</type>
+       <port>0</port>
+       <txt-record>model=RackMac</txt-record>
+     </service>
+    </service-group>
