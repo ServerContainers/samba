@@ -44,6 +44,7 @@ RUN export samba_version=4.6.2 \
                           zlib1g-dev \
  \
  && apt-get -q -y clean \
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  \
  && wget https://download.samba.org/pub/samba/stable/samba-${samba_version}.tar.gz \
  && tar xvf samba-${samba_version}.tar.gz \
