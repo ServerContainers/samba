@@ -55,6 +55,7 @@ RUN export samba_version=4.6.2 \
  && make \
  && make install \
  \
+ && touch /var/locks/registry.tdb \
  && cp examples/smb.conf.default /etc/smb.conf \
  && cd - \
  \
@@ -69,4 +70,4 @@ COPY scripts /usr/local/bin/
 HEALTHCHECK CMD ["docker-healthcheck.sh"]
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD [ "smbd", "-F", "-S" ]
+CMD [ "bash", "-c", "smbd -FS -d 2 < /dev/null" ]
