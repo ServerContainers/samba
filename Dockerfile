@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-RUN export samba_version=4.6.3 \
+RUN export samba_version=4.6.4 \
  && export DEBIAN_FRONTEND=noninteractive \
  \
  && apt-get -q -y update \
