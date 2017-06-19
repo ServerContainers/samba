@@ -51,6 +51,18 @@ cat > /etc/smb.conf <<EOF
 EOF
 
   ##
+  # SAMBA Configuration (enable NTLMv1 passwords/auth)
+  ##
+  if [ ! -z ${SAMBA_CONF_ENABLE_NTLM_AUTH+x} ]
+  then
+    echo ">> SAMBA CONFIG: \$SAMBA_CONF_ENABLE_NTLM_AUTH is set, enabling ntlm auth"
+cat >> /etc/smb.conf <<EOF
+   ntlm auth = yes
+
+EOF
+  fi
+
+  ##
   # SAMBA Configuration (Password Sync)
   ##
   if [ ! -z ${SAMBA_CONF_ENABLE_PASSWORD_SYNC+x} ]
