@@ -32,7 +32,8 @@ to restrict access of volumes you can add the following to your samba volume con
 
 * __SAMBA\_CONF\_ENABLE\_NTLM\_AUTH__
     * default not set - if set password sync is enabled
-    * _use if you have troubles like NTLMv1 passwords NOT PERMITTED for user_
+    * _use for compatibility with xp if you have troubles like NTLMv1 passwords NOT PERMITTED for user_
+    * !!! NOTE: NTLMv1 is known to be broken and it's easy to recover the real password from the hash !!!
 
 * __SAMBA\_VOLUME\_CONFIG\_myconfigname__
     * adds a new samba volume configuration
