@@ -1,7 +1,7 @@
 # still under construction
 
 # samba
-4.6.5 samba - freshly complied from official stable releases on debian:jessie
+4.6.6 samba - freshly complied from official stable releases on debian:jessie
 
 # Source Code
 Check the following link for a new version: https://download.samba.org/pub/samba/stable/
