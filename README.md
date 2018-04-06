@@ -85,9 +85,9 @@ __/etc/avahi/services/smb.service__
      </service>
     </service-group>
 
-__/etc/avahi/services/smb.service__ (with TimeMachine Support)
+__/etc/avahi/services/smb.service__ (with TimeMachine Support - more infos: https://gist.github.com/ChloeTigre/4c2022c0d1a281deedba6f7539a2e3ae)
 
-`SAMBA_VOLUME_CONFIG_timecapsule: "[Time Capsule]; path = /shares/TimeCapsule; valid users = johndoe; guest ok = no; read only = no; browseable = yes; force user = nobody; force group = nogroup; force create mode = 0660; force directory mode = 2770; fruit:aapl = yes; fruit:time machine = yes; fruit:time machine max size = 2000G;"`
+`SAMBA_VOLUME_CONFIG_timecapsule: "[Time Capsule]; path = /shares/TimeCapsule; valid users = johndoe; guest ok = no; read only = no; browseable = no; force user = nobody; force group = nogroup; force create mode = 0660; force directory mode = 2770; fruit:aapl = yes; fruit:time machine = yes; fruit:time machine max size = 2000G;"`
 
 ```
 <?xml version="1.0" standalone='no'?>
