@@ -84,3 +84,24 @@ __/etc/avahi/services/smb.service__
        <txt-record>model=RackMac</txt-record>
      </service>
     </service-group>
+
+__/etc/avahi/services/smb.service__ (with TimeMachine Support)
+
+`SAMBA_VOLUME_CONFIG_timecapsule: "[Time Capsule]; path = /shares/TimeCapsule; valid users = johndoe; guest ok = no; read only = no; browseable = yes; force user = nobody; force group = nogroup; force create mode = 0660; force directory mode = 2770; fruit:time machine = yes; fruit:time machine max size = 2000G;"`
+
+```
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+ <name replace-wildcards="yes">%h</name>
+ <service>
+   <type>_adisk._tcp</type>
+   <txt-record>sys=waMa=0,adVF=0x100</txt-record>
+   <txt-record>dk0=adVN=Time Capsule,adVF=0x82</txt-record>
+ </service>
+  <service>
+    <type>_smb._tcp</type>
+    <port>445</port>
+  </service>
+</service-group>
+```
