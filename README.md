@@ -1,5 +1,5 @@
 # samba
-samba - freshly complied from official stable releases on debian:jessie
+samba - freshly complied from official stable releases on debian:stretch
 
 # Source Code
 Check the following link for a new version: https://download.samba.org/pub/samba/stable/
@@ -24,6 +24,13 @@ to restrict access of volumes you can add the following to your samba volume con
 
 * __SAMBA\_CONF\_MAP_TO_GUEST__
     * default: _Bad User_
+
+* __SAMBA\_CONF\_ENABLE\_TIMEMACHINE__
+    * default not set - if set Apple's SMB2+ extension is enabled and timemachine support activated
+
+* __SAMBA\_CONF\_TIMEMACHINE\_MAX\_SIZE__
+    * default not set - if set it limits global disk size and preventing Time Machine from using the whole real disk space for backup
+    * format: `SIZE [K|M|G|T|P]`
 
 * __SAMBA\_CONF\_ENABLE\_PASSWORD\_SYNC__
     * default not set - if set password sync is enabled
