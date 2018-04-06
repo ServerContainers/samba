@@ -51,6 +51,28 @@ cat > /etc/smb.conf <<EOF
 EOF
 
   ##
+  # Apple's SMB2+ extension timemachine support activated
+  ##
+  if [ ! -z ${SAMBA_CONF_ENABLE_TIMEMACHINE+x} ]
+  then
+    echo ">> SAMBA CONFIG: \$SAMBA_CONF_ENABLE_TIMEMACHINE is set, enabling Apple's SMB2+ & timemachine"
+cat >> /etc/smb.conf <<EOF
+   # Apple's SMB2+ & timemachine
+   fruit:aapl = yes
+   fruit:time machine = yes
+
+EOF
+    if [ ! -z ${SAMBA_CONF_TIMEMACHINE_MAX_SIZE+x} ]
+    then
+      echo ">> SAMBA CONFIG: \$SAMBA_CONF_TIMEMACHINE_MAX_SIZE is set to $SAMBA_CONF_TIMEMACHINE_MAX_SIZE"
+cat >> /etc/smb.conf <<EOF
+   fruit:time machine max size = $SAMBA_CONF_TIMEMACHINE_MAX_SIZE
+
+EOF
+    fi
+  fi
+
+  ##
   # SAMBA Configuration (enable NTLMv1 passwords/auth)
   ##
   if [ ! -z ${SAMBA_CONF_ENABLE_NTLM_AUTH+x} ]
