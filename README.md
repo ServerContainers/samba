@@ -29,6 +29,7 @@ to restrict access of volumes you can add the following to your samba volume con
     * default not set - if set Apple's SMB2+ extension is enabled and timemachine support activated
 
 * __SAMBA\_CONF\_TIMEMACHINE\_MAX\_SIZE__
+    * IMPORTANT! This is the global setting you might want to add this to the share using raw samba config (https://www.samba.org/samba/docs/current/man-html/vfs_fruit.8.html)
     * default not set - if set it limits global disk size and preventing Time Machine from using the whole real disk space for backup
     * format: `SIZE [K|M|G|T|P]`
 
