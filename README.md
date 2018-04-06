@@ -42,7 +42,7 @@ to restrict access of volumes you can add the following to your samba volume con
 
 # Apple TimeMachine
 
-To enable TimeMachine Support add this to your `SAMBA_VOLUME_CONFIG`: `fruit:time machine = yes;`
+To enable TimeMachine Support add this to your `SAMBA_VOLUME_CONFIG`: `fruit:aapl = yes; fruit:time machine = yes;`
 
 You can also limit the size available for timemachine by also adding `fruit:time machine max size = 500G;` (format: `SIZE [K|M|G|T|P]
 `)
@@ -87,7 +87,7 @@ __/etc/avahi/services/smb.service__
 
 __/etc/avahi/services/smb.service__ (with TimeMachine Support)
 
-`SAMBA_VOLUME_CONFIG_timecapsule: "[Time Capsule]; path = /shares/TimeCapsule; valid users = johndoe; guest ok = no; read only = no; browseable = yes; force user = nobody; force group = nogroup; force create mode = 0660; force directory mode = 2770; fruit:time machine = yes; fruit:time machine max size = 2000G;"`
+`SAMBA_VOLUME_CONFIG_timecapsule: "[Time Capsule]; path = /shares/TimeCapsule; valid users = johndoe; guest ok = no; read only = no; browseable = yes; force user = nobody; force group = nogroup; force create mode = 0660; force directory mode = 2770; fruit:aapl = yes; fruit:time machine = yes; fruit:time machine max size = 2000G;"`
 
 ```
 <?xml version="1.0" standalone='no'?>
