@@ -53,23 +53,13 @@ EOF
   ##
   # Apple's SMB2+ extension timemachine support activated
   ##
-  if [ ! -z ${SAMBA_CONF_ENABLE_TIMEMACHINE+x} ]
+  if env | grep 'SAMBA_VOLUME_CONFIG_' | grep 'fruit:' 2> /dev/null >/dev/null
   then
-    echo ">> SAMBA CONFIG: \$SAMBA_CONF_ENABLE_TIMEMACHINE is set, enabling Apple's SMB2+ & timemachine"
+    echo ">> SAMBA CONFIG: enabling Apple's SMB2+ extentions"
 cat >> /etc/smb.conf <<EOF
-   # Apple's SMB2+ & timemachine
    fruit:aapl = yes
-   fruit:time machine = yes
 
 EOF
-    if [ ! -z ${SAMBA_CONF_TIMEMACHINE_MAX_SIZE+x} ]
-    then
-      echo ">> SAMBA CONFIG: \$SAMBA_CONF_TIMEMACHINE_MAX_SIZE is set to $SAMBA_CONF_TIMEMACHINE_MAX_SIZE"
-cat >> /etc/smb.conf <<EOF
-   fruit:time machine max size = $SAMBA_CONF_TIMEMACHINE_MAX_SIZE
-
-EOF
-    fi
   fi
 
   ##
