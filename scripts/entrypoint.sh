@@ -57,8 +57,10 @@ EOF
   then
     echo ">> SAMBA CONFIG: enabling Apple's SMB2+ extentions"
 cat >> /etc/smb.conf <<EOF
+   vfs objects = fruit
    fruit:aapl = yes
-
+   fruit:time machine = yes
+   
 EOF
   fi
 
