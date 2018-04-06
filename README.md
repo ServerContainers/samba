@@ -1,5 +1,3 @@
-# still under construction
-
 # samba
 samba - freshly complied from official stable releases on debian:jessie
 
