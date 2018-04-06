@@ -25,14 +25,6 @@ to restrict access of volumes you can add the following to your samba volume con
 * __SAMBA\_CONF\_MAP_TO_GUEST__
     * default: _Bad User_
 
-* __SAMBA\_CONF\_ENABLE\_TIMEMACHINE__
-    * default not set - if set Apple's SMB2+ extension is enabled and timemachine support activated
-
-* __SAMBA\_CONF\_TIMEMACHINE\_MAX\_SIZE__
-    * IMPORTANT! This is the global setting you might want to add this to the share using raw samba config (https://www.samba.org/samba/docs/current/man-html/vfs_fruit.8.html)
-    * default not set - if set it limits global disk size and preventing Time Machine from using the whole real disk space for backup
-    * format: `SIZE [K|M|G|T|P]`
-
 * __SAMBA\_CONF\_ENABLE\_PASSWORD\_SYNC__
     * default not set - if set password sync is enabled
 
@@ -47,6 +39,15 @@ to restrict access of volumes you can add the following to your samba volume con
     * examples
         * "[My Share]; path=/shares/myshare; guest ok = no; read only = no; browseable = yes"
         * "[Guest Share]; path=/shares/guests; guest ok = yes; read only = no; browseable = yes"
+
+# Apple TimeMachine
+
+To enable TimeMachine Support add this to your `SAMBA_VOLUME_CONFIG`: `fruit:time machine = yes;`
+
+You can also limit the size available for timemachine by also adding `fruit:time machine max size = 500G;` (format: `SIZE [K|M|G|T|P]
+`)
+
+More infos about the Apple Extensions: https://www.samba.org/samba/docs/current/man-html/vfs_fruit.8.html
 
 # Links
 * https://wiki.samba.org/index.php/Samba_AD_DC_Port_Usage
