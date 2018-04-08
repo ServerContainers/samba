@@ -60,7 +60,7 @@ cat >> /etc/smb.conf <<EOF
    vfs objects = catia fruit streams_xattr
    fruit:aapl = yes
    fruit:time machine = yes
-   
+   fruit:nfs_aces = no
 EOF
   fi
 
