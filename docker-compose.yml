@@ -8,7 +8,7 @@ services:
     environment:
       ACCOUNT_alice: alipass
       ACCOUNT_bob: bobpass
-      SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes; fruit:time machine = no"
+      SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes"
       SAMBA_VOLUME_CONFIG_bobstm: "[TimeCapsule Bob]; path=/shares/timemachine; valid users = bob; guest ok = no; read only = no; browseable = no; fruit:aapl = yes; fruit:time machine = yes; fruit:time machine max size = 500G;"
     volumes:
       - ./shares/alice:/shares/alice
