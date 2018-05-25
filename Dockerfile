@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-RUN export samba_version=4.8.1 \
+RUN export samba_version=4.8.2 \
  && export DEBIAN_FRONTEND=noninteractive \
  \
  && apt-get -q -y update \
