@@ -36,6 +36,7 @@ RUN export samba_version=4.8.4 \
                           perl \
                           perl-modules \
                           pkg-config \
+                          procps \
                           python-all-dev \
                           python-dev \
                           python-dnspython \
