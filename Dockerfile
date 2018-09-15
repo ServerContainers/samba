@@ -52,7 +52,7 @@ RUN export samba_version=4.9.0 \
  && rm samba-${samba_version}.tar.gz \
  \
  && cd samba-${samba_version} \
- && ./configure --prefix=/ \
+ && ./configure --prefix=/ --without-ldb-lmdb \
  && make \
  && make install \
  \
