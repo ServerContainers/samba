@@ -33,6 +33,7 @@ RUN export samba_version=4.9.0 \
                           libparse-yapp-perl \
                           libpopt-dev \
                           libreadline-dev \
+                          libjansson-dev \
                           perl \
                           perl-modules \
                           pkg-config \
