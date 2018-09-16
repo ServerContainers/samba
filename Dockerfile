@@ -33,6 +33,9 @@ RUN export samba_version=4.9.0 \
                           libparse-yapp-perl \
                           libpopt-dev \
                           libreadline-dev \
+                          libjansson-dev \
+                          libarchive-dev \
+                          libgpgme11-dev \
                           perl \
                           perl-modules \
                           pkg-config \
@@ -41,6 +44,7 @@ RUN export samba_version=4.9.0 \
                           python-dev \
                           python-dnspython \
                           python-crypto \
+                          python-gpgme \
                           xsltproc \
                           zlib1g-dev \
  \
@@ -52,7 +56,7 @@ RUN export samba_version=4.9.0 \
  && rm samba-${samba_version}.tar.gz \
  \
  && cd samba-${samba_version} \
- && ./configure --prefix=/ \
+ && ./configure --prefix=/ --without-ldb-lmdb \
  && make \
  && make install \
  \
