@@ -34,6 +34,7 @@ RUN export samba_version=4.9.0 \
                           libpopt-dev \
                           libreadline-dev \
                           libjansson-dev \
+                          libarchive-dev \
                           libgpgme11-dev \
                           perl \
                           perl-modules \
