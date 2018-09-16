@@ -34,6 +34,7 @@ RUN export samba_version=4.9.0 \
                           libpopt-dev \
                           libreadline-dev \
                           libjansson-dev \
+                          libgpgme11-dev \
                           perl \
                           perl-modules \
                           pkg-config \
@@ -42,6 +43,7 @@ RUN export samba_version=4.9.0 \
                           python-dev \
                           python-dnspython \
                           python-crypto \
+                          python-gpgme \
                           xsltproc \
                           zlib1g-dev \
  \
