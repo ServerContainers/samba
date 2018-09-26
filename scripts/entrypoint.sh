@@ -57,7 +57,7 @@ EOF
   then
     echo ">> SAMBA CONFIG: enabling Apple's SMB2+ extentions"
 cat >> /etc/smb.conf <<EOF
-   vfs objects = catia fruit streams_xattr
+   vfs objects = fruit streams_xattr zfsacl
    fruit:aapl = yes
    fruit:nfs_aces = no
 EOF
