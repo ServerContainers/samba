@@ -8,7 +8,9 @@ RUN export samba_version=4.9.1 \
  && apt-get -q -y install samba \
  \
  && apt-get -q -y clean \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+ \
+ && touch /var/lib/samba/registry.tdb
 
 VOLUME ["/shares"]
 
