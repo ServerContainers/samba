@@ -118,6 +118,7 @@ EOF
     echo "" >> /etc/smb.conf
   done
 
+  cp /etc/smb.conf /etc/samba/smb.conf
   touch "$INITALIZED"
 else
   echo ">> CONTAINER: already initialized - direct start of samba"

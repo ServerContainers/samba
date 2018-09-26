@@ -1,8 +1,11 @@
 # samba
-samba - freshly complied from official stable releases on debian:stretch
 
-# Source Code
-Check the following link for a new version: https://download.samba.org/pub/samba/stable/
+this `master` branch or docker image with tag `latest` uses samba as package as provided by `debian:stretch`.
+
+If you want a specific version you can use a tagged version. This tagged version contains a freshly complied samba from official stable releases on debian:stretch.
+The Source Code is obtained from the following location: https://download.samba.org/pub/samba/stable/
+
+Other then that the container features are kept the same.
 
 ## Environment variables and defaults
 
