@@ -99,9 +99,14 @@ __/etc/avahi/services/smb.service__ (with TimeMachine Support - more infos: http
    <txt-record>sys=waMa=0,adVF=0x100</txt-record>
    <txt-record>dk0=adVN=Time Capsule,adVF=0x82</txt-record>
  </service>
-  <service>
+ <service>
     <type>_smb._tcp</type>
     <port>445</port>
-  </service>
+ </service>
+ <service>
+   <type>_device-info._tcp</type>
+   <port>0</port>
+   <txt-record>model=RackMac</txt-record>
+ </service>
 </service-group>
 ```
