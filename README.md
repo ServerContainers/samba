@@ -45,6 +45,8 @@ to restrict access of volumes you can add the following to your samba volume con
 
 # Apple TimeMachine
 
+__I had a big headache using samba with timemachine properly - it often breaks and doens't work for quite some time - so I went back to the servercontainers/netatalk container for proper timemachine support. The following text helps you if you want to try - maybe it works maybe it doesn't__
+
 To enable TimeMachine Support add this to your `SAMBA_VOLUME_CONFIG`: `fruit:aapl = yes; fruit:time machine = yes;`
 
 You can also limit the size available for timemachine by also adding `fruit:time machine max size = 500G;` (format: `SIZE [K|M|G|T|P]
