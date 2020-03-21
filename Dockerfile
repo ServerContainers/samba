@@ -1,7 +1,6 @@
-FROM debian:stretch
+FROM debian:buster
 
-RUN export samba_version=4.9.1 \
- && export DEBIAN_FRONTEND=noninteractive \
+RUN export DEBIAN_FRONTEND=noninteractive \
  \
  && apt-get -q -y update \
  && apt-get -q -y upgrade \
