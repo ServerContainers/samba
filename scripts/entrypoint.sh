@@ -115,6 +115,7 @@ EOF
 
     echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' >> /etc/smb.conf
     echo "" >> /etc/smb.conf
+    echo "" >> /etc/smb.conf
   done
 
   cp /etc/smb.conf /etc/samba/smb.conf
