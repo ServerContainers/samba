@@ -1,0 +1,2 @@
+#!/bin/sh
+exec avahi-daemon --no-rlimits

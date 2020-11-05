@@ -1,117 +1,82 @@
-# samba
+# samba - (servercontainers/samba) [x86 + arm]
 
-this `master` branch or docker image with tag `latest` uses samba as package as provided by `debian:stretch`.
+samba on alpine
 
-If you want a specific version you can use a tagged version. This tagged version contains a freshly complied samba from official stable releases on debian:stretch.
-The Source Code is obtained from the following location: https://download.samba.org/pub/samba/stable/
+## Changelogs
 
-Other then that the container features are kept the same.
+* 2020-11-05
+    * multiarch build
+    * rewrite from debian to alpine
+    * enhanced timemachine support
+
+## Info
+
+This is a Samba Server Container running on `_/alpine`.
 
 ## Environment variables and defaults
 
 ### Samba
 
+*  __SAMBA\_GLOBAL\_CONFIG\_someuniquevalue__
+    * add any global samba config to `smb.conf`
+    * example value: `mimic model = RackMac`
+    * some available options are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
+
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
     * adds a new user account with the given username and the env value as password
+    * to restrict access of volumes you can add the following to your samba volume config:
+        * `valid users = alice; invalid users = bob;`
 
-to restrict access of volumes you can add the following to your samba volume config:
-
-    valid users = alice; invalid users = bob;
+* __MODEL__
+    * _optional_ model value of avahi samba service
+    * _default:_ `TimeCapsule`
 
 * __SAMBA\_CONF\_WORKGROUP__
     * default: _WORKGROUP_
 
 * __SAMBA\_CONF\_SERVER\_STRING__
-    * default: _file server_
+    * default: _Samba Server_
 
 * __SAMBA\_CONF\_MAP_TO_GUEST__
     * default: _Bad User_
 
-* __SAMBA\_CONF\_ENABLE\_PASSWORD\_SYNC__
-    * default not set - if set password sync is enabled
-
-* __SAMBA\_CONF\_ENABLE\_NTLM\_AUTH__
-    * default not set - if set password sync is enabled
-    * _use for compatibility with xp if you have troubles like NTLMv1 passwords NOT PERMITTED for user_
-    * !!! NOTE: NTLMv1 is known to be broken and it's easy to recover the real password from the hash !!!
-
 * __SAMBA\_VOLUME\_CONFIG\_myconfigname__
     * adds a new samba volume configuration
     * multiple variables/confgurations possible by adding unique configname to SAMBA_VOLUME_CONFIG_
-    * examples
-        * "[My Share]; path=/shares/myshare; guest ok = no; read only = no; browseable = yes"
-        * "[Guest Share]; path=/shares/guests; guest ok = yes; read only = no; browseable = yes"
+    * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
+    * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
+        * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume
 
-# Apple TimeMachine
+### Volumes
 
-__I had a big headache using samba with timemachine properly - it often breaks and doens't work for quite some time - so I went back to the servercontainers/netatalk container for proper timemachine support. The following text helps you if you want to try - maybe it works maybe it doesn't__
+* __your shares__
+    * by default I recommend mounting all shares beneath `/shares` and configure them using the `path` property
+    * the file `.samba-volume-uuid` gets created and should not be removed - especially on timemachine volumes it stores the uuid of the volume
 
-To enable TimeMachine Support add this to your `SAMBA_VOLUME_CONFIG`: `fruit:aapl = yes; fruit:time machine = yes;`
-
-You can also limit the size available for timemachine by also adding `fruit:time machine max size = 500G;` (format: `SIZE [K|M|G|T|P]
-`)
-
-More infos about the Apple Extensions: https://www.samba.org/samba/docs/current/man-html/vfs_fruit.8.html
-
-# Links
-* https://wiki.samba.org/index.php/Samba_AD_DC_Port_Usage
-* https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Standalone_Server
-* https://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html
+* __/external/avahi__
+    * mount your avahi service folder e.g. `/etc/avahi/services/` to this spot
+    * the container now maintains the service file `samba.service` for you - __it will be overwritten!__
+    * when mounted, the internal avahi daemon will be disabled
 
 
-# Avahi / Zeroconf
+## Some helpful indepth informations about TimeMachine and Avahi / Zeroconf 
 
-## Infos:
+### General Infos
 
-* https://linux.die.net/man/5/avahi.service
+- Samba
+    - https://github.com/willtho89/docker-samba-timemachine/
+    - https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X
+
+- Avahi
+    - https://openwrt.org/docs/guide-user/services/nas/samba_configuration#zeroconf_advertising
+    - http://samba.sourceforge.net/wiki/index.php/Bonjour_record_adisk_adVF_values
+    - https://linux.die.net/man/5/avahi.service
+
 
 You can't proxy the zeroconf inside the container to the outside, since this would need routing and forwarding to your internal docker0 interface from outside.
+So you need to use the `network=host` mode to enable zeroconf from within the container
 
-You can just expose the needed ports to the docker hosts port and install avahi.
+You can just expose the needed Port 548 to the docker hosts port and install avahi.
 After that just add a new service which fits to your config.
 
-### Example Configuration
-
-__/etc/avahi/services/smb.service__
-
-    <?xml version="1.0" standalone='no'?>
-    <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-    <service-group>
-     <name replace-wildcards="yes">%h</name>
-     <service>
-       <type>_smb._tcp</type>
-       <port>445</port>
-     </service>
-     <service>
-       <type>_device-info._tcp</type>
-       <port>0</port>
-       <txt-record>model=RackMac</txt-record>
-     </service>
-    </service-group>
-
-__/etc/avahi/services/smb.service__ (with TimeMachine Support - more infos: https://gist.github.com/ChloeTigre/4c2022c0d1a281deedba6f7539a2e3ae)
-
-`SAMBA_VOLUME_CONFIG_timecapsule: "[Time Capsule]; path = /shares/TimeCapsule; valid users = johndoe; guest ok = no; read only = no; browseable = no; force user = nobody; force group = nogroup; force create mode = 0660; force directory mode = 2770; fruit:aapl = yes; fruit:time machine = yes; fruit:time machine max size = 2000G;"`
-
-```
-<?xml version="1.0" standalone='no'?>
-<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-<service-group>
- <name replace-wildcards="yes">%h</name>
- <service>
-   <type>_adisk._tcp</type>
-   <txt-record>sys=waMa=0,adVF=0x100</txt-record>
-   <txt-record>dk0=adVN=Time Capsule,adVF=0x82</txt-record>
- </service>
- <service>
-    <type>_smb._tcp</type>
-    <port>445</port>
- </service>
- <service>
-   <type>_device-info._tcp</type>
-   <port>0</port>
-   <txt-record>model=RackMac</txt-record>
- </service>
-</service-group>
-```

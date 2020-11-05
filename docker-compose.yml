@@ -1,24 +1,18 @@
 version: '3'
-
+ 
 services:
   samba:
-    build: .
     image: servercontainers/samba
     restart: always
+    network_mode: host
     environment:
+      MODEL: 'TimeCapsule'
+
       ACCOUNT_alice: alipass
       ACCOUNT_bob: bobpass
+
       SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes"
-      SAMBA_VOLUME_CONFIG_bobstm: "[TimeCapsule Bob]; path=/shares/timemachine; valid users = bob; guest ok = no; read only = no; browseable = no; fruit:aapl = yes; fruit:time machine = yes; fruit:time machine max size = 500G;"
+      SAMBA_VOLUME_CONFIG_bobstm: "[TimeCapsule Bob]; path=/shares/timemachine; valid users = bob; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G;"
     volumes:
       - ./shares/alice:/shares/alice
       - ./shares/timemachine:/shares/timemachine
-    ports:
-      - 139:139
-      - 445:445
-    networks:
-      - samba
-
-networks:
-  samba:
-    driver: bridge

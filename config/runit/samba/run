@@ -1,0 +1,3 @@
+#!/bin/sh
+sleep 2
+exec smb -FS -d 2
