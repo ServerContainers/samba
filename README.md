@@ -19,8 +19,7 @@ This is a Samba Server Container running on `_/alpine`.
 
 *  __SAMBA\_GLOBAL\_CONFIG\_someuniquevalue__
     * add any global samba config to `smb.conf`
-    * example value: `mimic model = RackMac`
-    * some available options are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
+    * example value: `key = value`
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
@@ -31,6 +30,7 @@ This is a Samba Server Container running on `_/alpine`.
 * __MODEL__
     * _optional_ model value of avahi samba service
     * _default:_ `TimeCapsule`
+    * some available options are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
 
 * __SAMBA\_CONF\_WORKGROUP__
     * default: _WORKGROUP_
