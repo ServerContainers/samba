@@ -111,21 +111,21 @@ if [ ! -f "$INITALIZED" ]; then
         then
           echo ">> TIMEMACHINE: zeroconf model: $MODEL"
           echo '
-  <service>
-   <type>_device-info._tcp</type>
-   <port>0</port>
-   <txt-record>model='"$MODEL"'</txt-record>
-  </service>' >> /etc/avahi/services/samba.service
+ <service>
+  <type>_device-info._tcp</type>
+  <port>0</port>
+  <txt-record>model='"$MODEL"'</txt-record>
+ </service>' >> /etc/avahi/services/samba.service
         fi
 
         NUMBER=$(env | grep 'fruit:time machine' | grep -n "$VOL_PATH" | grep "\[$VOL_NAME\]" | sed 's/^\([0-9]*\):.*/\1/g' | head -n1)
 
         echo '
-  <service>
-   <type>_adisk._tcp</type>
-   <txt-record>sys=waMa=0,adVF=0x100,adVU='"$UUID"'</txt-record>
-   <txt-record>dk'"$NUMBER"'=adVN='"$VOL_NAME"',adVF=0x82</txt-record>
-  </service>
+ <service>
+  <type>_adisk._tcp</type>
+  <txt-record>sys=waMa=0,adVF=0x100,adVU='"$UUID"'</txt-record>
+  <txt-record>dk'"$NUMBER"'=adVN='"$VOL_NAME"',adVF=0x82</txt-record>
+ </service>
 </service-group>' >> /etc/avahi/services/samba.service
     fi
 
@@ -133,7 +133,7 @@ if [ ! -f "$INITALIZED" ]; then
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep 'fruit:time machine' | grep yes 2>/dev/null >/dev/null;
     then
         echo ">> TIMEMACHINE: updating volume config: $VOL_NAME ($VOL_PATH)"
-        cat '
+        echo '
   durable handles = yes
   kernel oplocks = no
   kernel share modes = no
