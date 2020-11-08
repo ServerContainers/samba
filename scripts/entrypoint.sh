@@ -30,7 +30,7 @@ if [ ! -f "$INITALIZED" ]; then
 
   cp /container/config/samba/smb.conf /etc/samba/smb.conf
   cp /container/config/avahi/samba.service /etc/avahi/services/samba.service
-  
+
   ##
   # MAIN CONFIGURATION
   ##
@@ -65,6 +65,9 @@ if [ ! -f "$INITALIZED" ]; then
     echo '   '"$CONF_CONF_VALUE" >> /etc/samba/smb.conf
   done
 
+  echo '>> init smbd'
+  timeout 3 /container/config/runit/samba/run 2>/dev/null >/dev/null
+
   ##
   # USER ACCOUNTS
   ##
@@ -76,7 +79,7 @@ if [ ! -f "$INITALIZED" ]; then
     echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
     adduser -H -s /bin/false "$ACCOUNT_NAME"
     echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
-    echo "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd -a "$ACCOUNT_NAME"
+    echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd -a "$ACCOUNT_NAME"
     smbpasswd -e "$ACCOUNT_NAME"
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
