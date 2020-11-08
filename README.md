@@ -4,6 +4,8 @@ samba on alpine
 
 ## Changelogs
 
+* 2020-11-08
+    * fixed samba user creation
 * 2020-11-05
     * multiarch build
     * rewrite from debian to alpine
