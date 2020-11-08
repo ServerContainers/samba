@@ -65,9 +65,6 @@ if [ ! -f "$INITALIZED" ]; then
     echo '   '"$CONF_CONF_VALUE" >> /etc/samba/smb.conf
   done
 
-  echo '>> init smbd'
-  timeout 3 /container/config/runit/samba/run 2>/dev/null >/dev/null
-
   ##
   # USER ACCOUNTS
   ##

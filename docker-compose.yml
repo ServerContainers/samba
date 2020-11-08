@@ -2,6 +2,7 @@ version: '3'
  
 services:
   samba:
+    build: .
     image: servercontainers/samba
     restart: always
     network_mode: host

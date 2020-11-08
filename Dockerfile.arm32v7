@@ -16,6 +16,8 @@ RUN apk add --no-cache runit \
                        avahi \
                        samba \
  \
+ && touch /var/lib/samba/registry.tdb /var/lib/samba/account_policy.tdb \
+ \
  && sed -i 's/#enable-dbus=.*/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf \
  && rm -vf /etc/avahi/services/* \
  \
