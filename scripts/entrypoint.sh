@@ -9,18 +9,6 @@ Welcome to the servercontainers/samba
 
 ################################################################################
 
-
- <service>
-   <type>_device-info._tcp</type>
-   <port>0</port>
-   <txt-record>model=RackMac</txt-record>
- </service>
- <service>
-   <type>_adisk._tcp</type>
-   <txt-record>sys=waMa=0,adVF=0x100</txt-record>
-   <txt-record>dk0=adVN=TimeMachine,adVF=0x82</txt-record>
- </service>
-
 EOF
 
 INITALIZED="/.initialized"
