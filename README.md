@@ -6,6 +6,7 @@ samba on alpine
 
 * 2020-11-08
     * fixed samba user creation
+    * custom avahi service name
 * 2020-11-05
     * multiarch build
     * rewrite from debian to alpine
@@ -33,6 +34,10 @@ This is a Samba Server Container running on `_/alpine`.
     * _optional_ model value of avahi samba service
     * _default:_ `TimeCapsule`
     * some available options are Xserve, PowerBook, PowerMac, Macmini, iMac, MacBook, MacBookPro, MacBookAir, MacPro, MacPro6,1, TimeCapsule, AppleTV1,1 and AirPort.
+
+* __AVAHI\_NAME__
+    * _optional_ name of avahi samba service
+    * _default:_ _hostname_
 
 * __SAMBA\_CONF\_WORKGROUP__
     * default: _WORKGROUP_
