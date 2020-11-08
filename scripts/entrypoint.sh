@@ -70,6 +70,8 @@ if [ ! -f "$INITALIZED" ]; then
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
   done
 
+  echo '' >> /etc/samba/smb.conf
+
   ##
   # Samba Volume Config ENVs
   ##
@@ -124,14 +126,14 @@ if [ ! -f "$INITALIZED" ]; then
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep 'fruit:time machine' | grep yes 2>/dev/null >/dev/null;
     then
         echo ">> TIMEMACHINE: updating volume config: $VOL_NAME ($VOL_PATH)"
-        echo '
-  durable handles = yes
-  kernel oplocks = no
-  kernel share modes = no
-  posix locking = no
-  vfs objects = catia fruit streams_xattr
-  ea support = yes
-  inherit acls = yes
+        echo ' fruit:metadata = stream
+ durable handles = yes
+ kernel oplocks = no
+ kernel share modes = no
+ posix locking = no
+ vfs objects = catia fruit streams_xattr
+ ea support = yes
+ inherit acls = yes
 ' >> /etc/samba/smb.conf
     fi
     echo "" >> /etc/samba/smb.conf
