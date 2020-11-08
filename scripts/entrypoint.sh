@@ -102,6 +102,7 @@ if [ ! -f "$INITALIZED" ]; then
  </service>' >> /etc/avahi/services/samba.service
         fi
 
+        echo ">> TIMEMACHINE: fix permissions"
         VALID_USERS=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep 'valid users' | sed 's/.*= *//g')
         for user in $VALID_USERS; do
           chown $user.$user -R "$VOL_PATH"
