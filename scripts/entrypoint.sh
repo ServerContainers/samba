@@ -102,6 +102,12 @@ if [ ! -f "$INITALIZED" ]; then
  </service>' >> /etc/avahi/services/samba.service
         fi
 
+        VALID_USERS=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep 'valid users' | sed 's/.*= *//g')
+        for user in $VALID_USERS; do
+          chown $user.$user -R "$VOL_PATH"
+        done
+        chmod 700 -R "$VOL_PATH"
+
         [ ! -z ${NUMBER+x} ] && NUMBER=$(expr $NUMBER + 1)
         [ -z ${NUMBER+x} ] && NUMBER=0
 
