@@ -59,7 +59,6 @@ This is a Samba Server Container running on `_/alpine`.
 
 * __your shares__
     * by default I recommend mounting all shares beneath `/shares` and configure them using the `path` property
-    * the file `.samba-volume-uuid` gets created and should not be removed - especially on timemachine volumes it stores the uuid of the volume
 
 * __/external/avahi__
     * mount your avahi service folder e.g. `/etc/avahi/services/` to this spot
@@ -74,6 +73,7 @@ This is a Samba Server Container running on `_/alpine`.
 - Samba
     - https://github.com/willtho89/docker-samba-timemachine/
     - https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X
+    - https://serverfault.com/questions/1010822/samba4-issues-with-time-machine-cannot-create-new-backup-on-samba-share
 
 - Avahi
     - https://openwrt.org/docs/guide-user/services/nas/samba_configuration#zeroconf_advertising

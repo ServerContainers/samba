@@ -85,15 +85,9 @@ if [ ! -f "$INITALIZED" ]; then
         VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
         VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
         echo ">> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
-        if [ ! -f "$VOL_PATH/.samba-volume-uuid" ]
-        then
-          UUID=$(cat /proc/sys/kernel/random/uuid)
-          echo "$UUID" > "$VOL_PATH/.samba-volume-uuid"
-          echo ">> TIMEMACHINE: creating new random uuid: $UUID"
-        fi
-        UUID=$(cat "$VOL_PATH/.samba-volume-uuid")
 
         [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
+        sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
 
         if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
         then
@@ -106,15 +100,24 @@ if [ ! -f "$INITALIZED" ]; then
  </service>' >> /etc/avahi/services/samba.service
         fi
 
-        NUMBER=$(env | grep 'fruit:time machine' | grep -n "$VOL_PATH" | grep "\[$VOL_NAME\]" | sed 's/^\([0-9]*\):.*/\1/g' | head -n1)
+        [ ! -z ${NUMBER+x} ] && NUMBER=$(expr $NUMBER + 1)
+        [ -z ${NUMBER+x} ] && NUMBER=0
 
-        echo '
+        if ! grep '<txt-record>dk' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
+        then
+          # for first time add complete service
+          echo '
  <service>
   <type>_adisk._tcp</type>
-  <txt-record>sys=waMa=0,adVF=0x100,adVU='"$UUID"'</txt-record>
+  <txt-record>sys=waMa=0,adVF=0x100</txt-record>
   <txt-record>dk'"$NUMBER"'=adVN='"$VOL_NAME"',adVF=0x82</txt-record>
  </service>
 </service-group>' >> /etc/avahi/services/samba.service
+        else
+          # from the second one only append new txt-record
+          REPLACE_ME=$(grep '<txt-record>dk' /etc/avahi/services/samba.service | tail -n 1)
+          sed -i 's;'"$REPLACE_ME"';'"$REPLACE_ME"'\n  <txt-record>dk'"$NUMBER"'=adVN='"$VOL_NAME"',adVF=0x82</txt-record>;g' /etc/avahi/services/samba.service
+        fi
     fi
 
     echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' >> /etc/samba/smb.conf
