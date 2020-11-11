@@ -7,7 +7,7 @@ RUN apk add curl && curl -L ${QEMU_URL} | tar zxvf - -C . --strip-components 1
 FROM arm64v8/alpine
 # alpine:3.12
 
-COPY --from=builder qemu-arm-static /usr/bin
+COPY --from=builder qemu-aarch64-static /usr/bin
 
 ENV PATH="/container/scripts:${PATH}"
 
