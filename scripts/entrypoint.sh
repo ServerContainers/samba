@@ -82,7 +82,8 @@ if [ ! -f "$INITALIZED" ]; then
     # if time machine volume
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep 'fruit:time machine' | grep yes 2>/dev/null >/dev/null;
     then
-        sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service
+        # remove </service-group> only if this is the first time a timemachine volume was added
+        grep '<txt-record>dk' /etc/avahi/services/samba.service 2> /dev/null >/dev/null || sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service
 
         VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
         VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
