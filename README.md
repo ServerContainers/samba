@@ -4,6 +4,8 @@ samba on alpine
 
 ## Changelogs
 
+* 2020-12-09
+    * bug fix: `</service-group>` gets removed with multiple timemachine volumes
 * 2020-11-08
     * fixed samba user creation
     * custom avahi service name
