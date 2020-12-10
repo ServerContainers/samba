@@ -103,12 +103,15 @@ if [ ! -f "$INITALIZED" ]; then
  </service>' >> /etc/avahi/services/samba.service
         fi
 
-        echo ">> TIMEMACHINE: fix permissions"
-        VALID_USERS=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep 'valid users' | sed 's/.*= *//g')
-        for user in $VALID_USERS; do
-          chown $user.$user -R "$VOL_PATH"
-        done
-        chmod 700 -R "$VOL_PATH"
+        if ! echo "$VOL_PATH" | grep '%U' 2>/dev/null >/dev/null; then
+          echo ">> TIMEMACHINE: fix permissions (only last one wins.. for multiple users I recommend using multi user mode - see README.md)"
+          VALID_USERS=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep 'valid users' | sed 's/.*= *//g')
+          for user in $VALID_USERS; do
+            echo "  user: $user"
+            chown $user.$user -R "$VOL_PATH"
+          done
+          chmod 700 -R "$VOL_PATH"
+        fi
 
         [ ! -z ${NUMBER+x} ] && NUMBER=$(expr $NUMBER + 1)
         [ -z ${NUMBER+x} ] && NUMBER=0
