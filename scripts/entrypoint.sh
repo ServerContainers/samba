@@ -143,7 +143,16 @@ if [ ! -f "$INITALIZED" ]; then
  ea support = yes
  inherit acls = yes
 ' >> /etc/samba/smb.conf
+     
+        if echo "$VOL_PATH" | grep '%U' 2>/dev/null >/dev/null; 
+        then
+          VOL_PATH_BASE=$(echo "$VOL_PATH" | sed 's,/%U$,,g')
+          echo ">> TIMEMACHINE: multiuser config found! - $VOL_PATH"
+          echo 'root preexec = /container/scripts/samba_create_timemachine_user_dir.sh '"$VOL_PATH_BASE"' %U' >> /etc/samba/smb.conf
+        fi
+
     fi
+
     echo "" >> /etc/samba/smb.conf
 
   done
