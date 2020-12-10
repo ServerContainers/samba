@@ -74,6 +74,7 @@ This is a Samba Server Container running on `_/alpine`.
 
 - Samba
     - https://github.com/willtho89/docker-samba-timemachine/
+    - https://github.com/sp00ls/SambaConfigs very interessting multi user timemachine setup
     - https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X
     - https://serverfault.com/questions/1010822/samba4-issues-with-time-machine-cannot-create-new-backup-on-samba-share
 
