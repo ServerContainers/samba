@@ -58,7 +58,7 @@ This is a Samba Server Container running on `_/alpine`.
     * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume
-        * if your path variable ends with `%U` e.g. `path = /shares/timemachine/%U;` multi user mode gets activated and each user gets his own subdirectory for his share.
+        * if your path variable ends with `%U` e.g. `path = /shares/timemachine/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share.
 
 ### Volumes
 
