@@ -21,4 +21,5 @@ then
   cat /var/lib/samba/private/smbpasswd | grep ':$' | grep '^'"$USERNAME"':[0-9]*:'
   exit 0
 fi
+
 exit 1
