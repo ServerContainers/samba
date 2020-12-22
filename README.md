@@ -4,6 +4,8 @@ samba on alpine
 
 ## Changelogs
 
+* 2020-12-22
+    * added support for samba password hashes instead of just plaintext passwords
 * 2020-12-10
     * added Timemachine Multiuser Support (samba config path needs to end with `%U`)
 * 2020-12-09
@@ -30,7 +32,10 @@ This is a Samba Server Container running on `_/alpine`.
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
-    * adds a new user account with the given username and the env value as password
+    * adds a new user account with the given username and the env value as password or samba hash
+        * either you add a simple plaintext password as value (can't start with `:`username`:[0-9]*:` or it will be detected as hash)
+        * to add a samba hash e.g. `user:1002:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:8846F7EAEE8FB117AD06BDD830B7586C:[U          ]:LCT-5FE1F7DF:` (user: `user` / password: `password`) add the line from `/var/lib/samba/private/smbpasswd`
+        * create hash using this command `docker run -ti --rm --entrypoint create-hash.sh servercontainers/samba`
     * to restrict access of volumes you can add the following to your samba volume config:
         * `valid users = alice; invalid users = bob;`
 
