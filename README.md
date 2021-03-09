@@ -4,6 +4,8 @@ samba on alpine
 
 ## Changelogs
 
+* 2021-03-09
+    * updated healthcheck to work with external avahi server
 * 2020-12-22
     * added support for samba password hashes instead of just plaintext passwords
 * 2020-12-10
