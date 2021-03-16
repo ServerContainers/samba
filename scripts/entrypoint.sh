@@ -63,7 +63,8 @@ if [ ! -f "$INITALIZED" ]; then
 
     ACCOUNT_UID=$(env | grep '^UID_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
 
-    [ "$ACCOUNT_UID" -gt 0 ]; then
+    if [ "$ACCOUNT_UID" -gt 0 ]
+    then
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
       adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
     else
