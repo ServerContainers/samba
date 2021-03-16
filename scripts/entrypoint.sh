@@ -61,8 +61,15 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
     ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
 
-    echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-    adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+    ACCOUNT_UID=$(env | grep '^UID_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
+
+    [ "$ACCOUNT_UID" -gt 0 ]; then
+      echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
+      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
+    else
+      echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
+      adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+    fi
     smbpasswd -a -n "$ACCOUNT_NAME"
 
     if echo "$ACCOUNT_PASSWORD" | grep ':$' | grep '^'"$ACCOUNT_NAME"':[0-9]*:'  >/dev/null 2>/dev/null

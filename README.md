@@ -4,6 +4,8 @@ samba on alpine
 
 ## Changelogs
 
+* 2021-03-16
+    * added support for specifing the `uid` for each `ACCOUNT_` using `UID_username=1234214` env.
 * 2021-03-09
     * updated healthcheck to work with external avahi server
 * 2020-12-22
@@ -40,6 +42,11 @@ This is a Samba Server Container running on `_/alpine`.
         * create hash using this command `docker run -ti --rm --entrypoint create-hash.sh servercontainers/samba`
     * to restrict access of volumes you can add the following to your samba volume config:
         * `valid users = alice; invalid users = bob;`
+
+* __UID\_username__
+    * optional
+    * specify the `uid` explicitly for each user account.
+    * the `username` part must match to a specified `ACCOUNT_username` environment variable
 
 * __MODEL__
     * _optional_ model value of avahi samba service
