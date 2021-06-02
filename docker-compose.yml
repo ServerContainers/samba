@@ -8,12 +8,26 @@ services:
     network_mode: host
     environment:
       MODEL: 'TimeCapsule'
+      AVAHI_NAME: StorageServer
 
       ACCOUNT_alice: alipass
+      UID_alice: 1000
+
       ACCOUNT_bob: bobpass
+      UID_bob: 1001
 
       SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes"
-      SAMBA_VOLUME_CONFIG_bobstm: "[TimeCapsule Bob]; path=/shares/timemachine; valid users = bob; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G;"
+      SAMBA_VOLUME_CONFIG_bobonly: "[Bob Share]; path=/shares/bob; valid users = bob; guest ok = no; read only = no; browseable = yes"
+      
+      SAMBA_VOLUME_CONFIG_public: "[Public]; path=/shares/public; valid users = alice, bob; guest ok = no; read only = no; browseable = yes"
+      SAMBA_VOLUME_CONFIG_public_ro: "[Public ReadOnly]; path=/shares/public; guest ok = yes; read only = yes; browseable = yes"
+      
+      SAMBA_VOLUME_CONFIG_timemachine: "[TimeMachine]; path=/shares/timemachine/%U; valid users = alice, bob; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G;"
     volumes:
+      - /etc/avahi/services/:/external/avahi
+      
       - ./shares/alice:/shares/alice
+      - ./shares/bob:/shares/bob
+      - ./shares/public:/shares/public
       - ./shares/timemachine:/shares/timemachine
+      
