@@ -4,6 +4,9 @@ samba on alpine
 
 ## Changelogs
 
+* 2021-08-08
+    * added env to contorl `log level` - default value `1` 
+    * fixed `SAMBA_GLOBAL_CONFIG_...` with spaces in the key.
 * 2021-03-16
     * added support for specifing the `uid` for each `ACCOUNT_` using `UID_username=1234214` env.
 * 2021-03-09
@@ -33,6 +36,8 @@ This is a Samba Server Container running on `_/alpine`.
 *  __SAMBA\_GLOBAL\_CONFIG\_someuniquevalue__
     * add any global samba config to `smb.conf`
     * example value: `key = value`
+    * important if the SAMBA key contains a ` ` space replace it with `_SPACE_`
+        * e.g. `foo_SPACE_bar`
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
@@ -56,6 +61,9 @@ This is a Samba Server Container running on `_/alpine`.
 * __AVAHI\_NAME__
     * _optional_ name of avahi samba service
     * _default:_ _hostname_
+
+* __SAMBA\_CONF\_LOG\_LEVEL__
+    * default: _1_
 
 * __SAMBA\_CONF\_WORKGROUP__
     * default: _WORKGROUP_

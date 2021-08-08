@@ -22,6 +22,13 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # MAIN CONFIGURATION
   ##
+  if [ -z ${SAMBA_CONF_LOG_LEVEL+x} ]
+  then
+    SAMBA_CONF_LOG_LEVEL="1"
+    echo ">> SAMBA CONFIG: no \$SAMBA_CONF_LOG_LEVEL set, using '$SAMBA_CONF_LOG_LEVEL'"
+  fi
+  echo '   log level = '"$SAMBA_CONF_LOG_LEVEL" >> /etc/samba/smb.conf
+
   if [ -z ${SAMBA_CONF_WORKGROUP+x} ]
   then
     SAMBA_CONF_WORKGROUP="WORKGROUP"
@@ -50,7 +57,7 @@ if [ ! -f "$INITALIZED" ]; then
   do
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> global config - adding: '$CONF_CONF_VALUE' to /etc/samba/smb.conf"
-    echo '   '"$CONF_CONF_VALUE" >> /etc/samba/smb.conf
+    echo '   '"$CONF_CONF_VALUE" | sed 's/_SPACE_/ /g' >> /etc/samba/smb.conf
   done
 
   ##
