@@ -4,6 +4,8 @@ samba on alpine
 
 ## Changelogs
 
+* 2021-08-23
+    * fixed `SAMBA_GLOBAL_CONFIG_...` missing key.
 * 2021-08-08
     * added env to contorl `log level` - default value `1` 
     * fixed `SAMBA_GLOBAL_CONFIG_...` with spaces in the key.
