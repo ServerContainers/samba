@@ -2,7 +2,7 @@
 
 samba on alpine
 
-with zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support
+with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support
 
 ## Changelogs
 
