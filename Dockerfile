@@ -1,5 +1,17 @@
+FROM alpine AS builder
+
+RUN apk add --no-cache make \
+                       gcc \
+                       libc-dev \
+                       linux-headers \
+ && wget -O - https://github.com/Netgear/wsdd2/archive/refs/heads/master.tar.gz | tar zxvf - \
+ && cd wsdd2-master \
+ && make
+
 FROM alpine
 # alpine:3.12
+
+COPY --from=builder /wsdd2-master/wsdd2 /usr/sbin
 
 ENV PATH="/container/scripts:${PATH}"
 

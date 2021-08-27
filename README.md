@@ -2,8 +2,13 @@
 
 samba on alpine
 
+with zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support
+
 ## Changelogs
 
+* 2021-08-27
+    * removed old multi arch build dockerfiles - `builx is used`
+    * added `wsdd2` for service discovery on windows
 * 2021-08-23
     * fixed `SAMBA_GLOBAL_CONFIG_...` missing key.
 * 2021-08-08
@@ -117,3 +122,9 @@ So you need to use the `network=host` mode to enable zeroconf from within the co
 You can just expose the needed Port 548 to the docker hosts port and install avahi.
 After that just add a new service which fits to your config.
 
+
+## Windows 10 Network Discovery
+
+- WSD
+    - https://devanswers.co/discover-ubuntu-machines-samba-shares-windows-10-network/
+    - https://github.com/Netgear/wsdd2
