@@ -48,11 +48,6 @@ This is a Samba Server Container running on `_/alpine`.
     * important if the SAMBA key contains a ` ` space replace it with `_SPACE_`
         * e.g. `foo_SPACE_bar`
 
-* __GROUP\_groupname__
-    * optional
-    * value will be `gid`
-    * example: `GROUP_devops=1500` will create group `devops` with id `1500`
-
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
     * adds a new user account with the given username and the env value as password or samba hash
@@ -66,6 +61,11 @@ This is a Samba Server Container running on `_/alpine`.
     * optional
     * specify the `uid` explicitly for each user account.
     * the `username` part must match to a specified `ACCOUNT_username` environment variable
+
+* __GROUP\_groupname__
+    * optional
+    * value will be `gid`
+    * example: `GROUP_devops=1500` will create group `devops` with id `1500`
 
 * __GROUPS\_username__
     * optional
