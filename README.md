@@ -6,6 +6,8 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 ## Changelogs
 
+* 2021-08-30
+    * added support for groups
 * 2021-08-27
     * removed old multi arch build dockerfiles - `builx is used`
     * added `wsdd2` for service discovery on windows
@@ -46,6 +48,11 @@ This is a Samba Server Container running on `_/alpine`.
     * important if the SAMBA key contains a ` ` space replace it with `_SPACE_`
         * e.g. `foo_SPACE_bar`
 
+* __GROUP\_groupname__
+    * optional
+    * value will be `gid`
+    * example: `GROUP_devops=1500` will create group `devops` with id `1500`
+
 * __ACCOUNT\_username__
     * multiple variables/accounts possible
     * adds a new user account with the given username and the env value as password or samba hash
@@ -59,6 +66,14 @@ This is a Samba Server Container running on `_/alpine`.
     * optional
     * specify the `uid` explicitly for each user account.
     * the `username` part must match to a specified `ACCOUNT_username` environment variable
+
+* __GROUPS\_username__
+    * optional
+    * additional groups for the user
+    * to create groups look at `GROUP_groupname` or mount/inject /etc/groups file (can cause problems)
+    * the `username` part must match to a specified `ACCOUNT_username` environment variable
+    * one or more groups to add seperated by a `,`
+    * example: `GROUPS_johndoe=musican,devops`
 
 * __MODEL__
     * _optional_ model value of avahi samba service
