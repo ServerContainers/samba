@@ -211,7 +211,7 @@ if [ ! -f "$INITALIZED" ]; then
   cat /etc/avahi/services/samba.service
   echo "################################ END #####################################"
 
-  [ ! -z "${WSDD2_PARAMETERS+x}" ] && echo ">> WSDD2: custom parameters for wsdd2 daemon: wsdd2 $WSDD2_PARAMETERS" && sed -i 's/wsdd2/wsdd2 '"$WSDD2_PARAMETERS"'/g' /container/config/runit/wsdd2/run
+  [ ! -z ${WSDD2_PARAMETERS+x} ] && echo ">> WSDD2: custom parameters for wsdd2 daemon: wsdd2 $WSDD2_PARAMETERS" && sed -i 's/wsdd2/wsdd2 '"$WSDD2_PARAMETERS"'/g' /container/config/runit/wsdd2/run
 
   if [ ! -f "/external/avahi/not-mounted" ]
   then
