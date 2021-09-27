@@ -6,6 +6,8 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 ## Changelogs
 
+* 2021-09-27
+    * added support for `wsdd2` parameterization
 * 2021-08-30
     * added support for groups
 * 2021-08-27
@@ -103,6 +105,11 @@ This is a Samba Server Container running on `_/alpine`.
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume
         * if your path variable ends with `%U` e.g. `path = /shares/timemachine/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share.
+
+* __WSDD2\_PARAMETERS__
+    * _optional_ specify parameters for wsdd2
+    * default not set - wsdd2 starts without any parameters
+    * e.g. `-l`
 
 ### Volumes
 
