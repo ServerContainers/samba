@@ -43,8 +43,6 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 This is a Samba Server Container running on `_/alpine`.
 
-Note: _This container recently added a new service (`wsdd2`) to support service discovery on windows systems. This service seems to need `CAP_NET_ADMIN` as a capability. (more info: https://github.com/ServerContainers/samba/issues/50)_
-
 ## Environment variables and defaults
 
 ### Samba
@@ -164,3 +162,9 @@ a explicit hostname using: `hostname: my-samba-containers-hostname`
 - WSD
     - https://devanswers.co/discover-ubuntu-machines-samba-shares-windows-10-network/
     - https://github.com/Netgear/wsdd2
+
+Note: _This `wsdd2` service seems to need `CAP_NET_ADMIN` as a capability. (more info: https://github.com/ServerContainers/samba/issues/50)_
+```
+    cap_add:
+      - CAP_NET_ADMIN
+```
