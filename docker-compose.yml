@@ -6,6 +6,9 @@ services:
     image: servercontainers/samba
     restart: always
     network_mode: host
+    # uncomment to solve bug: https://github.com/ServerContainers/samba/issues/50 - wsdd2 only - not needed for samba
+    #cap_add:
+    #  - CAP_NET_ADMIN
     environment:
       MODEL: 'TimeCapsule'
       AVAHI_NAME: StorageServer

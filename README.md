@@ -6,6 +6,9 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 ## Changelogs
 
+* 2021-12-02
+    * made `wsdd2` service optional
+    * updated version
 * 2021-09-27
     * added support for `wsdd2` parameterization
 * 2021-08-30
@@ -39,6 +42,8 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 ## Info
 
 This is a Samba Server Container running on `_/alpine`.
+
+Note: _This container recently added a new service (`wsdd2`) to support service discovery on windows systems. This service seems to need `CAP_NET_ADMIN` as a capability. (more info: https://github.com/ServerContainers/samba/issues/50)_
 
 ## Environment variables and defaults
 
@@ -106,6 +111,9 @@ This is a Samba Server Container running on `_/alpine`.
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume
         * if your path variable ends with `%U` e.g. `path = /shares/timemachine/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share.
 
+* __WSDD2\_DISABLE__
+    * _optional_
+    * default not set - set to any value to disable wsdd2 Service
 * __WSDD2\_PARAMETERS__
     * _optional_ specify parameters for wsdd2
     * default not set - wsdd2 starts without any parameters
