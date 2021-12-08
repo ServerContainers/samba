@@ -59,6 +59,7 @@ This is a Samba Server Container running on `_/alpine`.
         * either you add a simple plaintext password as value (can't start with `:`username`:[0-9]*:` or it will be detected as hash)
         * to add a samba hash e.g. `user:1002:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:8846F7EAEE8FB117AD06BDD830B7586C:[U          ]:LCT-5FE1F7DF:` (user: `user` / password: `password`) add the line from `/var/lib/samba/private/smbpasswd`
         * create hash using this command `docker run -ti --rm --entrypoint create-hash.sh servercontainers/samba`
+        * see `docker-compose.yml` user `foo` for an example how it's used/configured.
     * to restrict access of volumes you can add the following to your samba volume config:
         * `valid users = alice; invalid users = bob;`
 
