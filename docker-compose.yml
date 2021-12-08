@@ -18,6 +18,10 @@ services:
 
       ACCOUNT_bob: bobpass
       UID_bob: 1001
+      
+      # example for hashed password (user: foo | password: bar)
+      ACCOUNT_foo: "foo:1000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:86C156FC198B358CCCF6278D8BD49B6A:[U          ]:LCT-61B0859A:"
+      UID_foo: 1002
 
       SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes"
       SAMBA_VOLUME_CONFIG_bobonly: "[Bob Share]; path=/shares/bob; valid users = bob; guest ok = no; read only = no; browseable = yes"
