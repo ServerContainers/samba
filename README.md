@@ -7,7 +7,8 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 ## Changelogs
 
 * 2021-12-24
-    * experienced some issues - now use only `interactive` flag to start `smbd`
+    * start `smbd` with `--foreground` parameter
+    * new examples for shared shares in `docker-compose.yml`
     * start `wsdd2` after 10 seconds
 * 2021-12-02
     * made `wsdd2` service optional
