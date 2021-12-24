@@ -8,6 +8,7 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 * 2021-12-24
     * experienced some issues - now use only `interactive` flag to start `smbd`
+    * start `wsdd2` after 10 seconds
 * 2021-12-02
     * made `wsdd2` service optional
     * updated version
