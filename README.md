@@ -8,6 +8,7 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 * 2021-12-24
     * start `smbd` with `--foreground` parameter
+    * fix for loglevel settings - it works now
     * new examples for shared shares in `docker-compose.yml`
     * start `wsdd2` after 10 seconds
 * 2021-12-02
