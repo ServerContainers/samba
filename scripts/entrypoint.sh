@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 export IFS=$'\n'
 
@@ -123,22 +123,25 @@ if [ ! -f "$INITALIZED" ]; then
   do
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
 
+    VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
+    VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
+
+    echo ">> VOLUME: adding volume: $VOL_NAME (path=$VOL_PATH)"
+
     # if time machine volume
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep 'fruit:time machine' | grep yes 2>/dev/null >/dev/null;
     then
         # remove </service-group> only if this is the first time a timemachine volume was added
         grep '<txt-record>dk' /etc/avahi/services/samba.service 2> /dev/null >/dev/null || sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service
 
-        VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
-        VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
-        echo ">> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
+        echo "  >> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
 
         [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
         sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
 
         if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
         then
-          echo ">> TIMEMACHINE: zeroconf model: $MODEL"
+          echo "  >> TIMEMACHINE: zeroconf model: $MODEL"
           echo '
  <service>
   <type>_device-info._tcp</type>
@@ -147,8 +150,8 @@ if [ ! -f "$INITALIZED" ]; then
  </service>' >> /etc/avahi/services/samba.service
         fi
 
-        if ! echo "$VOL_PATH" | grep '%U' 2>/dev/null >/dev/null; then
-          echo ">> TIMEMACHINE: fix permissions (only last one wins.. for multiple users I recommend using multi user mode - see README.md)"
+        if ! echo "$VOL_PATH" | grep '%U$' 2>/dev/null >/dev/null; then
+          echo "  >> TIMEMACHINE: fix permissions (only last one wins.. for multiple users I recommend using multi user mode - see README.md)"
           VALID_USERS=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep 'valid users' | sed 's/.*= *//g')
           for user in $VALID_USERS; do
             echo "  user: $user"
@@ -178,9 +181,10 @@ if [ ! -f "$INITALIZED" ]; then
     fi
 
     echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' >> /etc/samba/smb.conf
+
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep 'fruit:time machine' | grep yes 2>/dev/null >/dev/null;
     then
-        echo ">> TIMEMACHINE: updating volume config: $VOL_NAME ($VOL_PATH)"
+        echo "  >> TIMEMACHINE: adding samba timemachine specifics to volume config: $VOL_NAME ($VOL_PATH)"
         echo ' fruit:metadata = stream
  durable handles = yes
  kernel oplocks = no
@@ -190,14 +194,13 @@ if [ ! -f "$INITALIZED" ]; then
  ea support = yes
  inherit acls = yes
 ' >> /etc/samba/smb.conf
-     
-        if echo "$VOL_PATH" | grep '%U' 2>/dev/null >/dev/null; 
-        then
-          VOL_PATH_BASE=$(echo "$VOL_PATH" | sed 's,/%U$,,g')
-          echo ">> TIMEMACHINE: multiuser config found! - $VOL_PATH"
-          echo 'root preexec = /container/scripts/samba_create_timemachine_user_dir.sh '"$VOL_PATH_BASE"' %U' >> /etc/samba/smb.conf
-        fi
+    fi
 
+    if echo "$VOL_PATH" | grep '%U$' 2>/dev/null >/dev/null; 
+    then
+      VOL_PATH_BASE=$(echo "$VOL_PATH" | sed 's,/%U$,,g')
+      echo "  >> multiuser volume - $VOL_PATH"
+      echo ' root preexec = /container/scripts/samba_create_user_dir.sh '"$VOL_PATH_BASE"' %U' >> /etc/samba/smb.conf
     fi
 
     echo "" >> /etc/samba/smb.conf

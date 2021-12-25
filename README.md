@@ -6,6 +6,12 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 ## Changelogs
 
+* 2021-12-25
+    * multi user shares for all volumes possible
+    * removed bash to same some space
+    * improved `docker-compose.yml`
+    * improved healthcheck
+    * improved logging
 * 2021-12-24
     * start `smbd` with `--foreground` parameter
     * fix for loglevel settings - it works now
@@ -111,9 +117,9 @@ This is a Samba Server Container running on `_/alpine`.
     * adds a new samba volume configuration
     * multiple variables/confgurations possible by adding unique configname to SAMBA_VOLUME_CONFIG_
     * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
+    * if your path variable ends with `%U` e.g. `path = /shares/homes/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share. (great for timemachine - every user get's his own personal share)
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume
-        * if your path variable ends with `%U` e.g. `path = /shares/timemachine/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share.
 
 * __WSDD2\_DISABLE__
     * _optional_

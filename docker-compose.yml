@@ -29,13 +29,15 @@ services:
       ACCOUNT_foo: "foo:1000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:86C156FC198B358CCCF6278D8BD49B6A:[U          ]:LCT-61B0859A:"
       UID_foo: 1002
 
+      SAMBA_VOLUME_CONFIG_shared_home: "[Home]; path=/shares/homes/%U; valid users = alice, bob; guest ok = no; read only = no; browseable = yes"
+
       SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes"
       SAMBA_VOLUME_CONFIG_bobonly: "[Bob Share]; path=/shares/bob; valid users = bob; guest ok = no; read only = no; browseable = yes"
       
       SAMBA_VOLUME_CONFIG_public: "[Public]; path=/shares/public; valid users = alice, bob; guest ok = no; read only = no; browseable = yes; force group = family"
       SAMBA_VOLUME_CONFIG_public_ro: "[Public ReadOnly]; path=/shares/public; guest ok = yes; read only = yes; browseable = yes; force group = family"
       
-      SAMBA_VOLUME_CONFIG_timemachine: "[TimeMachine]; path=/shares/timemachine/%U; valid users = alice, bob; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G;"
+      SAMBA_VOLUME_CONFIG_timemachine: "[TimeMachine]; path=/shares/timemachine/%U; valid users = alice, bob; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G"
     volumes:
       - /etc/avahi/services/:/external/avahi
       
@@ -43,5 +45,6 @@ services:
       - ./shares/alice:/shares/alice
       - ./shares/bob:/shares/bob
       - ./shares/public:/shares/public
+      - ./shares/homes:/shares/homes
       - ./shares/timemachine:/shares/timemachine
       

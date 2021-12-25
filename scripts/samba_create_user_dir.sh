@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 chown nobody:nogroup "$1"
 chmod 777 "$1"
