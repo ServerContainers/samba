@@ -8,6 +8,8 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
 
 * 2021-12-30
     * fix for disabling `wsdd2`
+    * verbose execution of service start
+    * log to `stdout`
 * 2021-12-25
     * multi user shares for all volumes possible
     * removed bash to same some space

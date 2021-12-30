@@ -1,2 +1,2 @@
-#!/bin/sh
+#!/bin/sh -x
 exec avahi-daemon --no-rlimits
