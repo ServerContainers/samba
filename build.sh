@@ -20,7 +20,6 @@ echo "$@" | grep "release" 2>/dev/null >/dev/null && echo ">> releasing new late
 pwd | grep "variant" && exit 0 
 
 
-rm variants.tar variants/ 2>/dev/null >/dev/null
 tar cf variants.tar --exclude .git/ --exclude variants.tar .
 
 mkdir -p variants/smbd-only variants/smbd-avahi variants/smbd-wsdd2
