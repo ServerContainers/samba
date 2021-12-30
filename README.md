@@ -4,6 +4,32 @@ samba on alpine
 
 with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support
 
+## Versioning and Variants
+
+You'll find all images tagged like `a3.15.0-s4.15.2` which means `a<alpine version>-s<samba version>`.
+This way you can pin your installation/configuration to a certian version. or easily roll back if you experience any problems
+(don't forget to open a issue in that case ;D).
+
+The `latest` version will be updated/released after I managed to test a new pinned version in my production environment.
+This way I can easily find and fix bugs without affecting any users. It will result in a way more stable container.
+
+Other than that there are the following variants of this container:
+
+_all of those variants are automatically build and generated in one go_
+
+- `latest` or `a<alpine version>-s<samba version>`
+    - main version of this repo
+    - includes everything (smbd, avahi, wsdd2)
+    - not all services need to start/run -> use ENV variables to disable optional services
+- `smbd-only-latest` or `smbd-only-a<alpine version>-s<samba version>`
+    - this will only include smbd and my scripts - no avahi, wsdd2 installed
+- `smbd-avahi-latest` or `smbd-only-a<alpine version>-s<samba version>`
+    - this will only include smbd, my scripts and avahi
+    - optional service can still be disabled using ENV variables
+- `smbd-wsdd2-latest` or `smbd-only-a<alpine version>-s<samba version>`
+    - this will only include smbd, my scripts and wsdd2
+    - optional service can still be disabled using ENV variables
+
 ## Changelogs
 
 * 2021-12-30
@@ -12,6 +38,7 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
     * log to `stdout`
     * fixed connection issues by pinning alpine to `3.14`
     * made `avahi` optional
+    * new build process and variants
 * 2021-12-25
     * multi user shares for all volumes possible
     * removed bash to same some space
