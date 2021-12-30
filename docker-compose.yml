@@ -15,6 +15,9 @@ services:
 
       SAMBA_CONF_LOG_LEVEL: 3
 
+      #WSDD2_DISABLE: 1
+      #AVAHI_DISABLE: 1
+
       GROUP_family: 1500
 
       ACCOUNT_alice: alipass
@@ -28,16 +31,17 @@ services:
       # example for hashed password (user: foo | password: bar)
       ACCOUNT_foo: "foo:1000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:86C156FC198B358CCCF6278D8BD49B6A:[U          ]:LCT-61B0859A:"
       UID_foo: 1002
+      GROUPS_foo: family
 
-      SAMBA_VOLUME_CONFIG_shared_home: "[Home]; path=/shares/homes/%U; valid users = alice, bob; guest ok = no; read only = no; browseable = yes"
+      SAMBA_VOLUME_CONFIG_shared_home: "[Home]; path=/shares/homes/%U; valid users = alice, bob, foo; guest ok = no; read only = no; browseable = yes"
 
       SAMBA_VOLUME_CONFIG_aliceonly: "[Alice Share]; path=/shares/alice; valid users = alice; guest ok = no; read only = no; browseable = yes"
       SAMBA_VOLUME_CONFIG_bobonly: "[Bob Share]; path=/shares/bob; valid users = bob; guest ok = no; read only = no; browseable = yes"
       
-      SAMBA_VOLUME_CONFIG_public: "[Public]; path=/shares/public; valid users = alice, bob; guest ok = no; read only = no; browseable = yes; force group = family"
+      SAMBA_VOLUME_CONFIG_public: "[Public]; path=/shares/public; valid users = alice, bob, foo; guest ok = no; read only = no; browseable = yes; force group = family"
       SAMBA_VOLUME_CONFIG_public_ro: "[Public ReadOnly]; path=/shares/public; guest ok = yes; read only = yes; browseable = yes; force group = family"
       
-      SAMBA_VOLUME_CONFIG_timemachine: "[TimeMachine]; path=/shares/timemachine/%U; valid users = alice, bob; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G"
+      SAMBA_VOLUME_CONFIG_timemachine: "[TimeMachine]; path=/shares/timemachine/%U; valid users = alice, bob, foo; guest ok = no; read only = no; browseable = no; fruit:time machine = yes; fruit:time machine max size = 500G"
     volumes:
       - /etc/avahi/services/:/external/avahi
       

@@ -11,6 +11,7 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
     * verbose execution of service start
     * log to `stdout`
     * fixed connection issues by pinning alpine to `3.14`
+    * made `avahi` optional
 * 2021-12-25
     * multi user shares for all volumes possible
     * removed bash to same some space
@@ -105,6 +106,10 @@ This is a Samba Server Container running on `_/alpine`.
 * __AVAHI\_NAME__
     * _optional_ name of avahi samba service
     * _default:_ _hostname_
+
+* __AVAHI\_DISABLE__
+    * _optional_
+    * default not set - set to any value to disable avahi Service
 
 * __SAMBA\_CONF\_LOG\_LEVEL__
     * default: _1_

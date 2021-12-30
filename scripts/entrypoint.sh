@@ -218,7 +218,9 @@ if [ ! -f "$INITALIZED" ]; then
 
   [ ! -z ${WSDD2_DISABLE+x} ] && echo ">> WSDD2 - DISABLED" && rm -rf /container/config/runit/wsdd2
 
-  if [ ! -f "/external/avahi/not-mounted" ]
+  [ ! -z ${AVAHI_DISABLE+x} ] && echo ">> AVAHI - DISABLED" && rm -rf /container/config/runit/avahi
+
+  if [ -z ${AVAHI_DISABLE+x} ] && [ ! -f "/external/avahi/not-mounted" ]
   then
     echo ">> EXTERNAL AVAHI: found external avahi, now maintaining avahi service file 'samba.service'"
     echo ">> EXTERNAL AVAHI: internal avahi gets disabled"
@@ -228,6 +230,7 @@ if [ ! -f "$INITALIZED" ]; then
     echo ">> EXTERNAL AVAHI: list of services"
     ls -l /external/avahi/*.service
   fi
+
 
   touch "$INITALIZED"
 else
