@@ -4,6 +4,8 @@ IMG="servercontainers/samba"
 
 PLATFORM="linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6"
 
+rm variants.tar variants/ 2>/dev/null >/dev/null
+
 if [ -z ${SAMBA_VERSION+x} ] || [ -z ${SAMBA_VERSION+x} ]; then
   docker-compose build --pull --no-cache
   export SAMBA_VERSION=$(docker run --rm -ti "$IMG" smbd -V | tail -n1 | cut -d' ' -f2 | tr -d '\r')
