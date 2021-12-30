@@ -10,6 +10,7 @@ with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`
     * fix for disabling `wsdd2`
     * verbose execution of service start
     * log to `stdout`
+    * fixed connection issues by pinning alpine to `3.14`
 * 2021-12-25
     * multi user shares for all volumes possible
     * removed bash to same some space

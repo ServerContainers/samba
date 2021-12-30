@@ -1,4 +1,4 @@
-FROM alpine AS builder
+FROM alpine:3.14 AS builder
 
 RUN apk add --no-cache make \
                        gcc \
@@ -8,8 +8,8 @@ RUN apk add --no-cache make \
  && cd wsdd2-master \
  && make
 
-FROM alpine
-# alpine:3.12
+FROM alpine:3.14
+# alpine:3.14
 
 COPY --from=builder /wsdd2-master/wsdd2 /usr/sbin
 
