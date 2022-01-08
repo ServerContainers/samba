@@ -23,10 +23,10 @@ _all of those variants are automatically build and generated in one go_
     - not all services need to start/run -> use ENV variables to disable optional services
 - `smbd-only-latest` or `smbd-only-a<alpine version>-s<samba version>`
     - this will only include smbd and my scripts - no avahi, wsdd2 installed
-- `smbd-avahi-latest` or `smbd-only-a<alpine version>-s<samba version>`
+- `smbd-avahi-latest` or `smbd-avahi-a<alpine version>-s<samba version>`
     - this will only include smbd, my scripts and avahi
     - optional service can still be disabled using ENV variables
-- `smbd-wsdd2-latest` or `smbd-only-a<alpine version>-s<samba version>`
+- `smbd-wsdd2-latest` or `smbd-wsdd2-a<alpine version>-s<samba version>`
     - this will only include smbd, my scripts and wsdd2
     - optional service can still be disabled using ENV variables
 
