@@ -32,6 +32,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2022-01-08
+    * better build script
 * 2021-12-30
     * fix for disabling `wsdd2`
     * verbose execution of service start

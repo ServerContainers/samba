@@ -8,9 +8,12 @@ rm -rf variants.tar variants/ 2>/dev/null >/dev/null
 
 if [ -z ${SAMBA_VERSION+x} ] || [ -z ${SAMBA_VERSION+x} ]; then
   docker-compose build -q --pull --no-cache
-  export SAMBA_VERSION=$(docker run --rm -ti "$IMG" smbd -V | tail -n1 | cut -d' ' -f2 | tr -d '\r')
+  export SAMBA_VERSION=$(docker run --rm -ti "$IMG" apk list 2>/dev/null | grep '\[installed\]' | grep "samba-[0-9]" | cut -d " " -f1 | sed 's/samba-//g' | tr -d '\r')
   export ALPINE_VERSION=$(docker run --rm -ti "$IMG" cat /etc/alpine-release | tail -n1 | tr -d '\r')
 fi
+
+echo "check if image was already build and pushed - skip check on release version"
+echo "$@" | grep "release" || docker pull "$IMG:a$ALPINE_VERSION-s$SAMBA_VERSION" 2>/dev/null >/dev/null && echo "image already build" && exit 1
 
 docker buildx build -q --pull --no-cache --platform "$PLATFORM" -t "$IMG:a$ALPINE_VERSION-s$SAMBA_VERSION" --push .
 
