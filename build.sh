@@ -13,7 +13,7 @@ if [ -z ${SAMBA_VERSION+x} ] || [ -z ${SAMBA_VERSION+x} ]; then
 fi
 
 echo "check if image was already build and pushed - skip check on release version"
-echo "$@" | grep "release" || docker pull "$IMG:a$ALPINE_VERSION-s$SAMBA_VERSION" 2>/dev/null >/dev/null && echo "image already build" && exit 1
+echo "$@" | grep -v "release" && docker pull "$IMG:a$ALPINE_VERSION-s$SAMBA_VERSION" 2>/dev/null >/dev/null && echo "image already build" && exit 1
 
 docker buildx build -q --pull --no-cache --platform "$PLATFORM" -t "$IMG:a$ALPINE_VERSION-s$SAMBA_VERSION" --push .
 
