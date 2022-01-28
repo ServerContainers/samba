@@ -32,6 +32,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2022-01-28
+    * removed old `chmod 777, chown nodboy:nogroup` statements on multi user shares
 * 2022-01-20
     * fixed healthcheck for container `avahi`
 * 2022-01-08
