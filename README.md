@@ -32,6 +32,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2022-01-31
+    * support for global settings via stanza (similar to volume config)
 * 2022-01-28
     * removed old `chmod 777, chown nodboy:nogroup` statements on multi user shares
 * 2022-01-20
@@ -97,6 +99,12 @@ This is a Samba Server Container running on `_/alpine`.
 
 ### Samba
 
+*  __SAMBA\_GLOBAL\_STANZA__
+    * _optional_
+    * default not set
+    * use it to manage multiple global settings in one place
+    * seperate multiple settings/lines using `;` which will be automatically translated to `\n`
+
 *  __SAMBA\_GLOBAL\_CONFIG\_someuniquevalue__
     * add any global samba config to `smb.conf`
     * example value: `key = value`
@@ -160,6 +168,7 @@ This is a Samba Server Container running on `_/alpine`.
     * adds a new samba volume configuration
     * multiple variables/confgurations possible by adding unique configname to SAMBA_VOLUME_CONFIG_
     * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
+    * seperate multiple lines using `;` which will be automatically translated to `\n`
     * if your path variable ends with `%U` e.g. `path = /shares/homes/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share. (great for timemachine - every user get's his own personal share)
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume

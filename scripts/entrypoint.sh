@@ -53,6 +53,8 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # GLOBAL CONFIGURATION
   ##
+  echo "$SAMBA_GLOBAL_STANZA" | sed 's/;/\n   /g' | grep . >> /etc/samba/smb.conf
+
   for I_CONF in $(env | grep '^SAMBA_GLOBAL_CONFIG_')
   do
     CONF_KEY_VALUE=$(echo "$I_CONF" | sed 's/^SAMBA_GLOBAL_CONFIG_//g' | sed 's/=.*//g' | sed 's/_SPACE_/ /g')
