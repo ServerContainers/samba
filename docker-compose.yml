@@ -45,6 +45,11 @@ services:
       SAMBA_VOLUME_CONFIG_public_ro: "[Public ReadOnly]; path=/shares/public; guest ok = yes; read only = yes; browseable = yes; force group = family"
       
       SAMBA_VOLUME_CONFIG_timemachine: "[TimeMachine]; path=/shares/timemachine/%U; valid users = alice, bob, foo; guest ok = no; read only = no; browseable = yes; fruit:time machine = yes; fruit:time machine max size = 500G"
+      SAMBA_VOLUME_CONFIG_multiline: |
+        [guest]
+        path = /shares/someshare
+        guest ok = yes
+        browseable = yes
     volumes:
       - /etc/avahi/services/:/external/avahi
       

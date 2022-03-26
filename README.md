@@ -169,6 +169,7 @@ This is a Samba Server Container running on `_/alpine`.
     * multiple variables/confgurations possible by adding unique configname to SAMBA_VOLUME_CONFIG_
     * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
     * seperate multiple lines using `;` which will be automatically translated to `\n`
+      * alternately, use multi-lines strings directly in the environment variables.  You can do this in docker-compose by using the yaml block style indicator `|`.  See example in `docker-compose.yml`
     * if your path variable ends with `%U` e.g. `path = /shares/homes/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share. (great for timemachine - every user get's his own personal share)
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume

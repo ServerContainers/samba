@@ -121,11 +121,13 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # Samba Volume Config ENVs
   ##
-  for I_CONF in $(env | grep '^SAMBA_VOLUME_CONFIG_')
+  for I_CONF in $(env | grep '^SAMBA_VOLUME_CONFIG_' | cut -d'=' -f1)
   do
-    CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
+    # https://www.unix.com/linux/132018-how-get-indirect-variable-value.html
+    eval CONF_VAR=\$$I_CONF
+    CONF_CONF_VALUE="$CONF_VAR"
 
-    VOL_NAME=$(echo "$CONF_CONF_VALUE" | sed 's/.*\[\(.*\)\].*/\1/g')
+    VOL_NAME=$(echo "$CONF_CONF_VALUE" | head -n 1 | sed 's/.*\[\(.*\)\].*/\1/g')
     VOL_PATH=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep path | sed 's/.*= *//g')
 
     echo ">> VOLUME: adding volume: $VOL_NAME (path=$VOL_PATH)"
