@@ -18,7 +18,8 @@ then
   smbpasswd -a -n "$USERNAME" 2> /dev/null >/dev/null
   echo -e "$PASSWORD_1\n$PASSWORD_1" | passwd "$USERNAME" 2> /dev/null >/dev/null
   echo -e "$PASSWORD_1\n$PASSWORD_1" | smbpasswd "$USERNAME" 2> /dev/null >/dev/null
-  cat /var/lib/samba/private/smbpasswd | grep ':$' | grep '^'"$USERNAME"':[0-9]*:'
+  SMBPASSWD_FILE=$(testparm -s -v 2> /dev/null | grep 'smb passwd file' | cut -d= -f2- | sed 's/^ \+//')
+  cat "$SMBPASSWD_FILE" | grep ':$' | grep '^'"$USERNAME"':[0-9]*:'
   exit 0
 fi
 
