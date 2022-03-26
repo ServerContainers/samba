@@ -71,7 +71,7 @@ if [ ! -f "$INITALIZED" ]; then
     GROUP_NAME=$(echo "$I_CONF" | sed 's/^GROUP_//g' | sed 's/=.*//g')
     GROUP_ID=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> GROUP: adding group $GROUP_NAME with GID: $GROUP_ID"
-    addgroup -g "$GROUP_ID" "$GROUP_NAME"
+    addgroup --gid "$GROUP_ID" "$GROUP_NAME"
   done
 
   ##
@@ -87,18 +87,19 @@ if [ ! -f "$INITALIZED" ]; then
     if [ "$ACCOUNT_UID" -gt 0 ] 2>/dev/null
     then
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
-      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
+      adduser --disabled-password --no-create-home --uid "$ACCOUNT_UID" --shell /bin/false --gecos "Samba user $ACCOUNT_NAME" "$ACCOUNT_NAME"
     else
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-      adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+      adduser --disabled-password --no-create-home --shell /bin/false --gecos "Samba user $ACCOUNT_NAME" "$ACCOUNT_NAME"
     fi
     smbpasswd -a -n "$ACCOUNT_NAME"
+    SMBPASSWD_FILE=$(testparm -s -v 2> /dev/null | grep 'smb passwd file' | cut -d= -f2- | sed 's/^ \+//')
 
     if echo "$ACCOUNT_PASSWORD" | grep ':$' | grep '^'"$ACCOUNT_NAME"':[0-9]*:'  >/dev/null 2>/dev/null
     then
       echo ">> ACCOUNT: found SMB Password HASH instead of plain-text password"
       CLEAN_HASH=$(echo "$ACCOUNT_PASSWORD" | sed 's/^.*:[0-9]*://g')
-      sed -i 's/\('"$ACCOUNT_NAME"':[0-9]*:\).*/\1'"$CLEAN_HASH"'/g' /var/lib/samba/private/smbpasswd
+      sed -i 's/\('"$ACCOUNT_NAME"':[0-9]*:\).*/\1'"$CLEAN_HASH"'/g' "$SMBPASSWD_FILE"
     else
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd "$ACCOUNT_NAME"
