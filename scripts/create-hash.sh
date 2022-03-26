@@ -14,7 +14,7 @@ echo
 
 if [ "$PASSWORD_1" == "$PASSWORD_2" ] && [ "$PASSWORD_1" != "" ] && [ "$USERNAME" != "" ]
 then
-  adduser -D -H -s /bin/false "$USERNAME" 2> /dev/null >/dev/null
+  adduser  --disabled-password --no-create-home --shell /bin/false --gecos "Samba user $USERNAME" "$USERNAME" 2> /dev/null >/dev/null
   smbpasswd -a -n "$USERNAME" 2> /dev/null >/dev/null
   echo -e "$PASSWORD_1\n$PASSWORD_1" | passwd "$USERNAME" 2> /dev/null >/dev/null
   echo -e "$PASSWORD_1\n$PASSWORD_1" | smbpasswd "$USERNAME" 2> /dev/null >/dev/null
