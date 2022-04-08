@@ -87,10 +87,10 @@ if [ ! -f "$INITALIZED" ]; then
     if [ "$ACCOUNT_UID" -gt 0 ] 2>/dev/null
     then
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
-      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
+      useradd -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
     else
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-      adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+      useradd -s /bin/false "$ACCOUNT_NAME"
     fi
     smbpasswd -a -n "$ACCOUNT_NAME"
 

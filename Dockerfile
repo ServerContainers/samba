@@ -13,6 +13,7 @@ ENV PATH="/container/scripts:${PATH}"
 RUN apk add --no-cache runit \
                        avahi \
                        samba \
+                       shadow \
  \
  && sed -i 's/#enable-dbus=.*/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf \
  && rm -vf /etc/avahi/services/* \
