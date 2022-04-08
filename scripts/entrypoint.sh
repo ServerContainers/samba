@@ -71,7 +71,7 @@ if [ ! -f "$INITALIZED" ]; then
     GROUP_NAME=$(echo "$I_CONF" | sed 's/^GROUP_//g' | sed 's/=.*//g')
     GROUP_ID=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> GROUP: adding group $GROUP_NAME with GID: $GROUP_ID"
-    addgroup -g "$GROUP_ID" "$GROUP_NAME"
+    groupadd -g "$GROUP_ID" "$GROUP_NAME"
   done
 
   ##
