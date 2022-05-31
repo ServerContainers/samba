@@ -32,6 +32,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2022-05-31
+    * support for `server role` as ENV parameter
 * 2022-01-31
     * support for global settings via stanza (similar to volume config)
 * 2022-01-28
@@ -151,6 +153,10 @@ This is a Samba Server Container running on `_/alpine`.
 * __AVAHI\_DISABLE__
     * _optional_
     * default not set - set to any value to disable avahi Service
+
+* __SAMBA\_CONF\_SERVER\_ROLE__
+    * default: _standalone server_
+    * note: `$` is an invalid symbol in this env
 
 * __SAMBA\_CONF\_LOG\_LEVEL__
     * default: _1_

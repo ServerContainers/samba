@@ -22,6 +22,12 @@ if [ ! -f "$INITALIZED" ]; then
   ##
   # MAIN CONFIGURATION
   ##
+  if [ ! -z ${SAMBA_CONF_SERVER_ROLE+x} ]
+  then
+    echo ">> SAMBA CONFIG: \$SAMBA_CONF_SERVER_ROLE set, using '$SAMBA_CONF_SERVER_ROLE'"
+    sed -i 's$standalone server$'"$SAMBA_CONF_SERVER_ROLE"'$g' /etc/samba/smb.conf
+  fi
+
   if [ -z ${SAMBA_CONF_LOG_LEVEL+x} ]
   then
     SAMBA_CONF_LOG_LEVEL="1"
