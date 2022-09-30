@@ -1,11 +1,12 @@
 #!/bin/sh
 
-export IFS=$'\n'
+IFS="
+"
 
 cat <<EOF
 ################################################################################
 
-Welcome to the servercontainers/samba
+Welcome to the martijndierckx/samba
 
 ################################################################################
 
@@ -93,10 +94,10 @@ if [ ! -f "$INITALIZED" ]; then
     if [ "$ACCOUNT_UID" -gt 0 ] 2>/dev/null
     then
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
-      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
+      adduser --no-create-home --disabled-password --shell /bin/false --gecos GECOS --uid "$ACCOUNT_UID" "$ACCOUNT_NAME"
     else
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-      adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+      adduser --no-create-home --disabled-password --shell /bin/false --gecos GECOS "$ACCOUNT_NAME"
     fi
     smbpasswd -a -n "$ACCOUNT_NAME"
 
@@ -106,8 +107,13 @@ if [ ! -f "$INITALIZED" ]; then
       CLEAN_HASH=$(echo "$ACCOUNT_PASSWORD" | sed 's/^.*:[0-9]*://g')
       sed -i 's/\('"$ACCOUNT_NAME"':[0-9]*:\).*/\1'"$CLEAN_HASH"'/g' /var/lib/samba/private/smbpasswd
     else
-      echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
-      echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd "$ACCOUNT_NAME"
+      #echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
+      echo "$ACCOUNT_NAME:$ACCOUNT_PASSWORD" | chpasswd
+      #echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd -s "$ACCOUNT_NAME"
+      smbpasswd -s "$ACCOUNT_NAME"<<EOF
+$ACCOUNT_PASSWORD
+$ACCOUNT_PASSWORD
+EOF
     fi
     
     smbpasswd -e "$ACCOUNT_NAME"
