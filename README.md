@@ -32,6 +32,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2022-12-05
+    * fixed `SAMBA_GLOBAL_CONFIG_...` with colon in the key.
 * 2022-05-31
     * support for `server role` as ENV parameter
 * 2022-01-31
