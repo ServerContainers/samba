@@ -112,6 +112,8 @@ This is a Samba Server Container running on `_/alpine`.
     * example value: `key = value`
     * important if the SAMBA key contains a ` ` space replace it with `_SPACE_`
         * e.g. `foo_SPACE_bar`
+    * important if the SAMBA key contains a `:` space replace it with `_COLON_`
+        * e.g. `foo_COLON_bar`
 
 * __ACCOUNT\_username__
     * multiple variables/accounts possible

@@ -63,7 +63,7 @@ if [ ! -f "$INITALIZED" ]; then
 
   for I_CONF in $(env | grep '^SAMBA_GLOBAL_CONFIG_')
   do
-    CONF_KEY_VALUE=$(echo "$I_CONF" | sed 's/^SAMBA_GLOBAL_CONFIG_//g' | sed 's/=.*//g' | sed 's/_SPACE_/ /g')
+    CONF_KEY_VALUE=$(echo "$I_CONF" | sed 's/^SAMBA_GLOBAL_CONFIG_//g' | sed 's/=.*//g' | sed 's/_SPACE_/ /g' | sed 's/_COLON_/:/g')
     CONF_CONF_VALUE=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> global config - adding: '$CONF_KEY_VALUE' = '$CONF_CONF_VALUE' to /etc/samba/smb.conf"
     echo '   '"$CONF_KEY_VALUE"' = '"$CONF_CONF_VALUE"  >> /etc/samba/smb.conf
