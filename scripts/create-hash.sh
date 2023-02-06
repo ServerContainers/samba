@@ -12,6 +12,8 @@ echo -n '>> Retype password: ' 1>&2
 read -s PASSWORD_2
 echo
 
+USERNAME=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]')
+
 if [ "$PASSWORD_1" == "$PASSWORD_2" ] && [ "$PASSWORD_1" != "" ] && [ "$USERNAME" != "" ]
 then
   adduser -D -H -s /bin/false "$USERNAME" 2> /dev/null >/dev/null
