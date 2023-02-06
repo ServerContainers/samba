@@ -32,6 +32,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-02-06
+    * updated readme - capitalization of username
 * 2022-12-05
     * fixed `SAMBA_GLOBAL_CONFIG_...` with colon in the key.
 * 2022-05-31
@@ -124,6 +126,7 @@ This is a Samba Server Container running on `_/alpine`.
         * to add a samba hash e.g. `user:1002:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:8846F7EAEE8FB117AD06BDD830B7586C:[U          ]:LCT-5FE1F7DF:` (user: `user` / password: `password`) add the line from `/var/lib/samba/private/smbpasswd`
         * create hash using this command `docker run -ti --rm --entrypoint create-hash.sh servercontainers/samba`
         * see `docker-compose.yml` user `foo` for an example how it's used/configured.
+        * note: somehow when using the hashing function, only lowercase usernames are supported - this way username capitalization will be ignored completly and it works with every upper/lower combination of that name.
     * to restrict access of volumes you can add the following to your samba volume config:
         * `valid users = alice; invalid users = bob;`
 
