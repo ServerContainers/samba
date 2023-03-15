@@ -4,7 +4,7 @@ samba on alpine
 
 with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support.
 
-_currently tested on: x86, arm_
+_currently tested on: x86_64, arm64, arm_
 
 ## IMPORTANT!
 
@@ -25,9 +25,19 @@ You'll find this container sourcecode here:
 
 The container repos will be updated regularly.
 
-## Variants
+## Build & Variants
 
-You can use the `generate-variants.sh` script to generate variations of this container.
+You can specify `DOCKER_REGISTRY` environment variable (for example `my.registry.tld`)
+and use the build script to build the main container and it's variants for _x86_64, arm64 and arm_
+
+You'll find all images tagged like `a3.15.0-s4.15.2` which means `a<alpine version>-s<samba version>`.
+This way you can pin your installation/configuration to a certian version. or easily roll back if you experience any problems.
+
+To build a `latest` tag run `./build.sh release`
+
+
+For builds without specified registry you can use the `generate-variants.sh` script to generate 
+variations of this container and build the repos yourself.
 
 - `latest` or `a<alpine version>-s<samba version>`
     - main version of this repo
