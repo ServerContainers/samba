@@ -1,37 +1,55 @@
-# samba - (servercontainers/samba) [x86 + arm]
+# samba - build yourself container
 
 samba on alpine
 
-with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support
+with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support.
 
-## Versioning and Variants
+_currently tested on: x86, arm_
 
-You'll find all images tagged like `a3.15.0-s4.15.2` which means `a<alpine version>-s<samba version>`.
-This way you can pin your installation/configuration to a certian version. or easily roll back if you experience any problems
-(don't forget to open a issue in that case ;D).
+## IMPORTANT!
 
-The `latest` version will be updated/released after I managed to test a new pinned version in my production environment.
-This way I can easily find and fix bugs without affecting any users. It will result in a way more stable container.
+In March 2023 - Docker informed me that they are going to remove my 
+organizations `servercontainers` and `desktopcontainers` unless 
+I'm upgrading to a pro plan.
 
-Other than that there are the following variants of this container:
+I'm not going to do that. It's more of a professionally done hobby then a
+professional job I'm earning money with.
 
-_all of those variants are automatically build and generated in one go_
+In order to avoid bad actors taking over my org. names and publishing potenial
+backdoored containers, I'd recommend to switch over clone my github repos and
+build the containers yourself.
+
+You'll find this container sourcecode here:
+
+    https://github.com/ServerContainers/samba
+
+The container repos will be updated regularly.
+
+## Variants
+
+You can use the `generate-variants.sh` script to generate variations of this container.
 
 - `latest` or `a<alpine version>-s<samba version>`
     - main version of this repo
     - includes everything (smbd, avahi, wsdd2)
     - not all services need to start/run -> use ENV variables to disable optional services
-- `smbd-only-latest` or `smbd-only-a<alpine version>-s<samba version>`
+
+the following variants are found after running the `generate-variants.sh` script beneath folder
+`/variants`
+
+- `smbd-only`
     - this will only include smbd and my scripts - no avahi, wsdd2 installed
-- `smbd-avahi-latest` or `smbd-avahi-a<alpine version>-s<samba version>`
+- `smbd-avahi`
     - this will only include smbd, my scripts and avahi
     - optional service can still be disabled using ENV variables
-- `smbd-wsdd2-latest` or `smbd-wsdd2-a<alpine version>-s<samba version>`
+- `smbd-wsdd2`
     - this will only include smbd, my scripts and wsdd2
     - optional service can still be disabled using ENV variables
 
 ## Changelogs
 
+* 2023-03-15
+    * switched from docker hub to a build-yourself container
 * 2023-02-06
     * fixed capitalization of username while hashing - convert to lowercase
 * 2022-12-05

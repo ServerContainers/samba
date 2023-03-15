@@ -1,9 +1,11 @@
 version: '3'
  
+# docker-compose.yml example for https://github.com/ServerContainers/samba
+
 services:
   samba:
     build: .
-    image: servercontainers/samba
+    image: samba
     restart: always
     network_mode: host
     # uncomment to solve bug: https://github.com/ServerContainers/samba/issues/50 - wsdd2 only - not needed for samba
