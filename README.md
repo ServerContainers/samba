@@ -19,12 +19,6 @@ In order to avoid bad actors taking over my org. names and publishing potenial
 backdoored containers, I'd recommend to switch over clone my github repos and
 build the containers yourself.
 
-You'll find this container sourcecode here:
-
-    https://github.com/ServerContainers/samba
-
-The container repos will be updated regularly.
-
 ## Build & Variants
 
 You can specify `DOCKER_REGISTRY` environment variable (for example `my.registry.tld`)
