@@ -95,7 +95,7 @@ jobs:
           ./generate-variants.sh
 
       - name: Build and push Docker image - smbd-only
-        id: build-and-push
+        id: build-and-push-smbd-only
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: variants/smbd-only
@@ -107,7 +107,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push Docker image - smbd-avahi
-        id: build-and-push
+        id: build-and-push-smbd-avahi
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: variants/smbd-avahi
@@ -119,7 +119,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push Docker image - smbd-wsdd2
-        id: build-and-push
+        id: build-and-push-smbd-wsdd2
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: variants/smbd-wsdd2
