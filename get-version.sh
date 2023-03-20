@@ -5,4 +5,4 @@ export ALPINE_VERSION=$(docker run --rm -t get-version cat /etc/alpine-release |
 
 [ -z "$ALPINE_VERSION" ] && exit 1
 
-echo "a$ALPINE_VERSION-s$SAMBA_VERSION"
+echo "$1a$ALPINE_VERSION-s$SAMBA_VERSION"

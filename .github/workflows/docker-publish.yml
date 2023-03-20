@@ -71,7 +71,7 @@ jobs:
       - name: Extract Docker Version Tag
         id: docker_version_tag          
         run: |
-          ./get-version.sh | sed 's/^/tag=/g' >> $GITHUB_OUTPUT
+          ./get-version.sh ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}: | sed 's/^/tag=/g' >> $GITHUB_OUTPUT
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
