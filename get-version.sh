@@ -9,7 +9,7 @@ export IMAGE_EXISTS=$(docker pull "$IMGTAG" 2>/dev/null >/dev/null; echo $?)
 
 # return latest, if container is already available :)
 if [ "$IMAGE_EXISTS" -eq 0 ]; then
-  echo "latest"
+  echo "$1""latest"
 else
   echo "$IMGTAG"
 fi
