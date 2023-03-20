@@ -5,11 +5,13 @@ export IFS=$'\n'
 cat <<EOF
 ################################################################################
 
-Welcome to the servercontainers/samba
+Welcome to the ghcr.io/servercontainers/samba
 
 ################################################################################
 
 # IMPORTANT!
+
+NEW IMAGE REGISTRY: ghcr.io/servercontainers/samba
 
 In March 2023 - Docker informed me that they are going to remove my 
 organizations `servercontainers` and `desktopcontainers` unless 
@@ -19,8 +21,7 @@ I'm not going to do that. It's more of a professionally done hobby then a
 professional job I'm earning money with.
 
 In order to avoid bad actors taking over my org. names and publishing potenial
-backdoored containers, I'd recommend to switch over clone my github repos and
-build the containers yourself.
+backdoored containers, I'd recommend to switch over to my github registry.
 
 You'll find this container sourcecode here:
 
