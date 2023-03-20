@@ -72,6 +72,9 @@ jobs:
         id: docker_version_tag          
         run: |
           ./get-version.sh $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:" | tr '[:upper:]' '[:lower:]') | sed 's/^/tag=/g' >> $GITHUB_OUTPUT
+          ./get-version.sh $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:smbd-only-" | tr '[:upper:]' '[:lower:]') | sed 's/^/smbd_only_tag=/g' >> $GITHUB_OUTPUT
+          ./get-version.sh $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:smbd-avahi-" | tr '[:upper:]' '[:lower:]') | sed 's/^/smbd_avahi_tag=/g' >> $GITHUB_OUTPUT
+          ./get-version.sh $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:smbd-wsdd2" | tr '[:upper:]' '[:lower:]') | sed 's/^/smbd_wsdd2_tag=/g' >> $GITHUB_OUTPUT
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
@@ -87,7 +90,45 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Prepare Docker variations
+        run: |
+          ./generate-variants.sh
 
+      - name: Build and push Docker image - smbd-only
+        id: build-and-push
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: variants/smbd-only
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_version_tag.outputs.smbd_only_tag }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Docker image - smbd-avahi
+        id: build-and-push
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: variants/smbd-avahi
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_version_tag.outputs.smbd_avahi_tag }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push Docker image - smbd-wsdd2
+        id: build-and-push
+        uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
+        with:
+          context: variants/smbd-wsdd2
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_version_tag.outputs.smbd_wsdd2_tag }}
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
