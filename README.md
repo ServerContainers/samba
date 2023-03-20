@@ -1,12 +1,13 @@
-# samba - build yourself container
+# samba - (ghcr.io/servercontainers/samba) [x86 + arm]
 
 samba on alpine
 
 with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support.
 
-_currently tested on: x86_64, arm64, arm_
 
 ## IMPORTANT!
+
+__New Registry:__ `ghcr.io/servercontainers/samba`
 
 In March 2023 - Docker informed me that they are going to remove my 
 organizations `servercontainers` and `desktopcontainers` unless 
@@ -16,8 +17,7 @@ I'm not going to do that. It's more of a professionally done hobby then a
 professional job I'm earning money with.
 
 In order to avoid bad actors taking over my org. names and publishing potenial
-backdoored containers, I'd recommend to switch over clone my github repos and
-build the containers yourself.
+backdoored containers, I'd recommend to switch over to my new github registry: `ghcr.io/servercontainers`.
 
 ## Build & Variants
 
@@ -29,29 +29,29 @@ This way you can pin your installation/configuration to a certian version. or ea
 
 To build a `latest` tag run `./build.sh release`
 
-
 For builds without specified registry you can use the `generate-variants.sh` script to generate 
 variations of this container and build the repos yourself.
+
+_all of those variants are automatically build and generated in one go_
 
 - `latest` or `a<alpine version>-s<samba version>`
     - main version of this repo
     - includes everything (smbd, avahi, wsdd2)
     - not all services need to start/run -> use ENV variables to disable optional services
-
-the following variants are found after running the `generate-variants.sh` script beneath folder
-`/variants`
-
-- `smbd-only`
+- `smbd-only-latest` or `smbd-only-a<alpine version>-s<samba version>`
     - this will only include smbd and my scripts - no avahi, wsdd2 installed
-- `smbd-avahi`
+- `smbd-avahi-latest` or `smbd-avahi-a<alpine version>-s<samba version>`
     - this will only include smbd, my scripts and avahi
     - optional service can still be disabled using ENV variables
-- `smbd-wsdd2`
+- `smbd-wsdd2-latest` or `smbd-wsdd2-a<alpine version>-s<samba version>`
     - this will only include smbd, my scripts and wsdd2
     - optional service can still be disabled using ENV variables
 
 ## Changelogs
 
+* 2023-03-20
+    * github action to build container
+    * implemented ghcr.io as new registry
 * 2023-03-15
     * switched from docker hub to a build-yourself container
 * 2023-02-06
