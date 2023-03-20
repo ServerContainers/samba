@@ -68,6 +68,11 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Extract Docker Version Tag
+        id: docker_version_tag          
+        run: |
+          ./get-version.sh >> $GITHUB_OUTPUT
+
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
@@ -76,7 +81,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.docker_version_tag.outputs.* }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
