@@ -249,6 +249,20 @@ So you need to use the `network=host` mode to enable zeroconf from within the co
 You can just expose the needed Port 548 to the docker hosts port and install avahi.
 After that just add a new service which fits to your config.
 
+### My personal TimeMachine recommendation
+
+If you have a more sophisticated network setup (vpn, different networks etc.) you might want to avoid using zeroconfig + avahi in combination with TimeMachine.
+
+Zeroconf limits you to the autodiscovered mdns names (`$AVAHI_NAME` + `.local`). So whenever your mac can't pic up this zeroconf configuration TimeMachine will not backup your machine.
+This is not bad in a normal guy's personal homenetwork. Here it would backup everytime the user is at home and has all devices (and his backup nas) in one LAN.
+
+To overcome this issue, I'd suggest to connect your NAS/Samba Server manually using `Finder` -> Go -> Connect to Server (or shortcut `⌘k`).
+Enter the FQDN or IP of the server and the path to your timemachine share you want to connect to and establish the connection.
+
+Once the connection is established, you can open `Settings` -> TimeMachine and add/choose this newly connected share as your place to store your backups. You'll notice that it now shows the FQDN or IP you choose.
+If you already used this NAS but with zeroconf it should detect that there are already backups for your mac and asks/continues using them - so a full backup shouldn't be required if you switch your connection method.
+
+After you made this more explicit network configuration it will backup as soon as your device is reachable - so if a connection via VPN or cause of network cascading is possible. this way you can backup from any network as long as routing works :)
 
 ## Windows 10 Network Discovery
 
