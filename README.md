@@ -123,6 +123,10 @@ _all of those variants are automatically build and generated in one go_
 
 This is a Samba Server Container running on `_/alpine`.
 
+## Troubleshooting
+
+If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+
 ## Environment variables and defaults
 
 ### Samba
