@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-04-11
+    * fixed pid bug on container restarts
 * 2023-03-20
     * github action to build container
     * implemented ghcr.io as new registry
