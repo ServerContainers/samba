@@ -20,6 +20,9 @@ The container repository will be updated regularly.
 
 EOF
 
+# clean pids
+rm -rf /var/run/* 2>/dev/null >/dev/null
+
 INITALIZED="/.initialized"
 
 if [ ! -f "$INITALIZED" ]; then
