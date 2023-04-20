@@ -22,6 +22,7 @@ EOF
 
 # clean pids
 rm -rf /var/run/* 2>/dev/null >/dev/null
+mkdir /run/samba /var/run/samba
 
 INITALIZED="/.initialized"
 
@@ -250,7 +251,13 @@ if [ ! -f "$INITALIZED" ]; then
     echo ">> EXTERNAL AVAHI: list of services"
     ls -l /external/avahi/*.service
   fi
-
+  
+  echo ""
+  echo ">> SAMBA: check smb.conf file"
+  echo "############################### START ####################################"
+  testparm -s
+  echo "############################### END ####################################"
+  echo ""
 
   touch "$INITALIZED"
 else

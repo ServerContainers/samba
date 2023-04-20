@@ -49,6 +49,9 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-04-20
+    * added `testparm -s` to check config before starting - closes issue #81
+    * removed `socket options`, let the systems negotiate
 * 2023-04-11
     * fixed pid bug on container restarts
 * 2023-03-20
