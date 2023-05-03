@@ -123,6 +123,7 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
     * optional
     * value will be `gid`
     * example: `GROUP_devops=1500` will create group `devops` with id `1500`
+    * do not use for the default user groups e.g. `GROUP_bob=1000` - those groups are automatically created for the user
 
 * __GROUPS\_username__
     * optional
