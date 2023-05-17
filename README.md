@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+# 2023-05-17
+    * removed `fruit:advertise_fullsync` which doesn't exist
 * 2023-04-20
     * added `testparm -s` to check config before starting - closes issue #81
     * removed `socket options`, let the systems negotiate
