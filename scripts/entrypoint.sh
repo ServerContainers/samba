@@ -157,20 +157,6 @@ if [ ! -f "$INITALIZED" ]; then
 
         echo "  >> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
 
-        [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
-        sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
-
-        if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
-        then
-          echo "  >> TIMEMACHINE: zeroconf model: $MODEL"
-          echo '
- <service>
-  <type>_device-info._tcp</type>
-  <port>0</port>
-  <txt-record>model='"$MODEL"'</txt-record>
- </service>' >> /etc/avahi/services/samba.service
-        fi
-
         if ! echo "$VOL_PATH" | grep '%U$' 2>/dev/null >/dev/null; then
           echo "  >> TIMEMACHINE: fix permissions (only last one wins.. for multiple users I recommend using multi user mode - see README.md)"
           VALID_USERS=$(echo "$CONF_CONF_VALUE" | tr ';' '\n' | grep 'valid users' | sed 's/.*= *//g')
@@ -229,6 +215,33 @@ if [ ! -f "$INITALIZED" ]; then
   done
 
   [ ! -z ${AVAHI_NAME+x} ] && echo ">> ZEROCONF: custom avahi samba.service name: $AVAHI_NAME" && sed -i 's/%h/'"$AVAHI_NAME"'/g' /etc/avahi/services/samba.service
+
+  # if $MODEL doesn't exist
+  if [ -z ${MODEL+x} ];
+  then
+    # check if a time machine record already exists
+    if grep '<txt-record>dk' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
+    then
+      MODEL="TimeCapsule" # use time capsule as icon
+    else
+      MODEL="MacPro7,1@ECOLOR=226,226,224" # use rackmounted mac pro icon
+    fi
+  fi
+  sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
+
+  # if a txt-record for model does not already exist
+  if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
+  then
+    sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service # remove </service-group> as it will be added again below the device-info service
+    echo ">> ZEROCONF: Network discovery icon/model: $MODEL"
+    echo '
+ <service>
+  <type>_device-info._tcp</type>
+  <port>0</port>
+  <txt-record>model='"$MODEL"'</txt-record>
+ </service>
+</service-group>' >> /etc/avahi/services/samba.service
+  fi
 
   echo ">> ZEROCONF: samba.service file"
   echo "############################### START ####################################"
