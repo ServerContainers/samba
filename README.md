@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-07-29
+    * added `vfs objects = catia fruit streams_xattr` to global config to improve macos compatibility - closes issue #93
 * 2023-05-17
     * removed `fruit:advertise_fullsync` which doesn't exist
 * 2023-04-20

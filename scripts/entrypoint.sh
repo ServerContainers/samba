@@ -211,7 +211,6 @@ if [ ! -f "$INITALIZED" ]; then
  kernel oplocks = no
  kernel share modes = no
  posix locking = no
- vfs objects = catia fruit streams_xattr
  ea support = yes
  inherit acls = yes
 ' >> /etc/samba/smb.conf
