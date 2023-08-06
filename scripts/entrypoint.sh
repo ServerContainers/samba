@@ -124,7 +124,10 @@ if [ ! -f "$INITALIZED" ]; then
     fi
     
     smbpasswd -e "$ACCOUNT_NAME"
+  done
 
+  for I_ACCOUNT in $(env | grep '^ACCOUNT_')
+  do
     # add user to groups...
     ACCOUNT_GROUPS=$(env | grep '^GROUPS_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
     for GRP in $(echo "$ACCOUNT_GROUPS" | tr ',' '\n' | grep .); do
