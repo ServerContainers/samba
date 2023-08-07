@@ -50,7 +50,7 @@ _all of those variants are automatically build and generated in one go_
 ## Changelogs
 
 * 2023-08-07
-    * create alls groups, than create all users, and after that add users to groups - this gives a more clear and clean way to add users to different groups
+    * create all groups, than create all users, and after that add users to groups - this gives a more clear and clean way to add users to different groups
 * 2023-07-29
     * added `vfs objects = catia fruit streams_xattr` to global config to improve macos compatibility - closes issue #93
 * 2023-05-17
