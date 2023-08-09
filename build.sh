@@ -29,6 +29,8 @@ mkdir -p variants/smbd-only variants/smbd-avahi variants/smbd-wsdd2
 cd variants/smbd-only
 tar xf ../../variants.tar
 cat Dockerfile | grep -v avahi | grep -v wsdd2 > Dockerfile.new
+echo "ENV WSDD2_DISABLE=true" >> Dockerfile.new
+echo "ENV AVAHI_DISABLE=true" >> Dockerfile.new
 mv Dockerfile.new Dockerfile
 rm -rf config/avahi config/runit/avahi
 rm -rf config/runit/wsdd2
@@ -44,6 +46,7 @@ cd ../../
 cd variants/smbd-avahi
 tar xf ../../variants.tar
 cat Dockerfile | grep -v wsdd2 > Dockerfile.new
+echo "ENV WSDD2_DISABLE=true" >> Dockerfile.new
 mv Dockerfile.new Dockerfile
 rm -rf config/runit/wsdd2
 
@@ -58,6 +61,7 @@ cd ../../
 cd variants/smbd-wsdd2
 tar xf ../../variants.tar
 cat Dockerfile | grep -v avahi > Dockerfile.new
+echo "ENV AVAHI_DISABLE=true" >> Dockerfile.new
 mv Dockerfile.new Dockerfile
 rm -rf config/avahi config/runit/avahi
 
