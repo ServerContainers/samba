@@ -25,7 +25,7 @@ You can specify `DOCKER_REGISTRY` environment variable (for example `my.registry
 and use the build script to build the main container and it's variants for _x86_64, arm64 and arm_
 
 You'll find all images tagged like `a3.15.0-s4.15.2` which means `a<alpine version>-s<samba version>`.
-This way you can pin your installation/configuration to a certian version. or easily roll back if you experience any problems.
+This way you can pin your installation/configuration to a certain version. or easily roll back if you experience any problems.
 
 To build a `latest` tag run `./build.sh release`
 
