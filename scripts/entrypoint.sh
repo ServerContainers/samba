@@ -146,6 +146,23 @@ if [ ! -f "$INITALIZED" ]; then
   echo '' >> /etc/samba/smb.conf
 
   ##
+  # AVAHI basic / general configuration
+  ##
+  [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
+  sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
+
+  if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
+  then
+    echo "  >> AVAHI: zeroconf model: $MODEL"
+    echo '
+ <service>
+  <type>_device-info._tcp</type>
+  <port>0</port>
+  <txt-record>model='"$MODEL"'</txt-record>
+ </service>' >> /etc/avahi/services/samba.service
+  fi
+
+  ##
   # Samba Volume Config ENVs
   ##
   for I_CONF in $(env | grep '^SAMBA_VOLUME_CONFIG_')
@@ -164,20 +181,6 @@ if [ ! -f "$INITALIZED" ]; then
         grep '<txt-record>dk' /etc/avahi/services/samba.service 2> /dev/null >/dev/null || sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service
 
         echo "  >> TIMEMACHINE: adding volume to zeroconf: $VOL_NAME"
-
-        [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
-        sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
-
-        if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
-        then
-          echo "  >> TIMEMACHINE: zeroconf model: $MODEL"
-          echo '
- <service>
-  <type>_device-info._tcp</type>
-  <port>0</port>
-  <txt-record>model='"$MODEL"'</txt-record>
- </service>' >> /etc/avahi/services/samba.service
-        fi
 
         if ! echo "$VOL_PATH" | grep '%U$' 2>/dev/null >/dev/null; then
           echo "  >> TIMEMACHINE: fix permissions (only last one wins.. for multiple users I recommend using multi user mode - see README.md)"

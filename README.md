@@ -25,7 +25,7 @@ You can specify `DOCKER_REGISTRY` environment variable (for example `my.registry
 and use the build script to build the main container and it's variants for _x86_64, arm64 and arm_
 
 You'll find all images tagged like `a3.15.0-s4.15.2` which means `a<alpine version>-s<samba version>`.
-This way you can pin your installation/configuration to a certian version. or easily roll back if you experience any problems.
+This way you can pin your installation/configuration to a certain version. or easily roll back if you experience any problems.
 
 To build a `latest` tag run `./build.sh release`
 
@@ -49,6 +49,10 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-09-16
+    * implemented working version of pull #87
+    * fixed avahi model which now works without a single timemachine share
+    * avahi will now be configured without timemachine
 * 2023-08-07
     * create all groups, than create all users, and after that add users to groups - this gives a more clear and clean way to add users to different groups
 * 2023-07-29
