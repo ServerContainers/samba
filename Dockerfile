@@ -23,7 +23,7 @@ RUN apk add --no-cache runit \
 
 VOLUME ["/shares"]
 
-EXPOSE 139 445
+EXPOSE 139 445 137/udp
 
 COPY . /container/
 
