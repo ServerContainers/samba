@@ -263,9 +263,16 @@ if [ ! -f "$INITALIZED" ]; then
   fi
   
   echo ""
-  echo ">> SAMBA: check smb.conf file"
+  echo ">> SAMBA: check smb.conf file using 'testparm -s'"
   echo "############################### START ####################################"
   testparm -s
+  echo "############################### END ####################################"
+  echo ""
+
+  echo ""
+  echo ">> SAMBA: print whole smb.conf"
+  echo "############################### START ####################################"
+  cat /etc/samba/smb.conf
   echo "############################### END ####################################"
   echo ""
 

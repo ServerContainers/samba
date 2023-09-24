@@ -51,6 +51,7 @@ _all of those variants are automatically build and generated in one go_
 
 * 2023-09-24
     * added `nmbd` service and increase compatibility
+    * print `smb.conf` on initialization to make `testparm -s` problems visible
     * updated github build to fail if build/version combination already exists as tag
 * 2023-09-16
     * implemented working version of pull #87
