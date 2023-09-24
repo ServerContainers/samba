@@ -68,6 +68,11 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: New version needed?
+        id: docker_version_check          
+        run: |
+          ./build.sh
+
       - name: Extract Docker Version Tag
         id: docker_version_tag          
         run: |

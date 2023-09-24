@@ -51,6 +51,7 @@ _all of those variants are automatically build and generated in one go_
 
 * 2023-09-24
     * added `nmbd` service and increase compatibility
+    * updated github build to fail if build/version combination already exists as tag
 * 2023-09-16
     * implemented working version of pull #87
     * fixed avahi model which now works without a single timemachine share
