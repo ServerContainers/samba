@@ -18,6 +18,7 @@ on:
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
+  DOCKER_REGISTRY: ghcr.io/servercontainers
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
@@ -71,7 +72,7 @@ jobs:
       - name: New version needed?
         id: docker_version_check          
         run: |
-          DOCKER_REGISTRY=${{ env.REGISTRY }} ./build.sh
+          ./build.sh variant
 
       - name: Extract Docker Version Tag
         id: docker_version_tag          
