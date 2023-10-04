@@ -71,7 +71,7 @@ jobs:
       - name: New version needed?
         id: docker_version_check          
         run: |
-          ./build.sh
+          DOCKER_REGISTRY=${{ env.REGISTRY }} ./build.sh
 
       - name: Extract Docker Version Tag
         id: docker_version_tag          
