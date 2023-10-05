@@ -17,6 +17,9 @@ docker buildx build -q --pull --no-cache --platform "$PLATFORM" -t "$IMG:$TAG" -
 
 echo "$@" | grep "release" 2>/dev/null >/dev/null && echo ">> releasing new latest" && docker buildx build -q --pull --platform "$PLATFORM" -t "$IMG:latest" --push .
 
+# make sure to exit if this is only version check
+echo "$@" | grep "version-check" && exit 0 
+
 # make sure this is only executed in main script
 echo "$@" | grep "variant" && exit 0 
 
