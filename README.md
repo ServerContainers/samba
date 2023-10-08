@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-10-08
+    * fixed avahi service config - `</service-group>` error (Issue #107)
 * 2023-09-24
     * added `nmbd` service and increase compatibility
     * print `smb.conf` on initialization to make `testparm -s` problems visible

@@ -153,13 +153,17 @@ if [ ! -f "$INITALIZED" ]; then
 
   if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
   then
+    # remove </service-group>
+    sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service
+
     echo "  >> AVAHI: zeroconf model: $MODEL"
     echo '
  <service>
   <type>_device-info._tcp</type>
   <port>0</port>
   <txt-record>model='"$MODEL"'</txt-record>
- </service>' >> /etc/avahi/services/samba.service
+ </service>
+</service-group>' >> /etc/avahi/services/samba.service
   fi
 
   ##
