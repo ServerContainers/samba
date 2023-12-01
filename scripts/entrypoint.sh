@@ -69,6 +69,12 @@ if [ ! -f "$INITALIZED" ]; then
   fi
   echo '   map to guest = '"$SAMBA_CONF_MAP_TO_GUEST" >> /etc/samba/smb.conf
 
+  if [ ! -z ${NETBIOS_DISABLE+x} ]
+  then
+    echo ">> SAMBA CONFIG: \$NETBIOS_DISABLE is set"
+  fi
+  echo '   disable netbios = yes' >> /etc/samba/smb.conf
+
   ##
   # GLOBAL CONFIGURATION
   ##
@@ -254,6 +260,8 @@ if [ ! -f "$INITALIZED" ]; then
   [ ! -z ${WSDD2_DISABLE+x} ] && echo ">> WSDD2 - DISABLED" && rm -rf /container/config/runit/wsdd2
 
   [ ! -z ${AVAHI_DISABLE+x} ] && echo ">> AVAHI - DISABLED" && rm -rf /container/config/runit/avahi
+
+  [ ! -z ${NETBIOS_DISABLE+x} ] && echo ">> NETBIOS - DISABLED" && rm -rf /container/config/runit/nmbd
 
   if [ -z ${AVAHI_DISABLE+x} ] && [ ! -f "/external/avahi/not-mounted" ]
   then

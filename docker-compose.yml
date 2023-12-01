@@ -22,6 +22,7 @@ services:
       # uncomment to disable optional services
       #WSDD2_DISABLE: 1
       #AVAHI_DISABLE: 1
+      #NETBIOS_DISABLE: 1
 
       GROUP_family: 1500
 
