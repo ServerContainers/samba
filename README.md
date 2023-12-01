@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2023-12-01
+    * made `nmbd` optional use `NETBIOS_DISABLE=true` to disable nmbd
 * 2023-10-08
     * fixed avahi service config - `</service-group>` error (Issue #107)
 * 2023-09-24
@@ -194,6 +196,11 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
     * _optional_ specify parameters for wsdd2
     * default not set - wsdd2 starts without any parameters
     * e.g. `-l`
+
+* __NETBIOS\_DISABLE__
+    * _optional_
+    * default not set - set to any value to disable `nmbd`
+    * _not recommended_ - you should know that you want it disabled
 
 ### Volumes
 
