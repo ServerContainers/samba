@@ -72,8 +72,8 @@ if [ ! -f "$INITALIZED" ]; then
   if [ ! -z ${NETBIOS_DISABLE+x} ]
   then
     echo ">> SAMBA CONFIG: \$NETBIOS_DISABLE is set"
+    echo '   disable netbios = yes' >> /etc/samba/smb.conf
   fi
-  echo '   disable netbios = yes' >> /etc/samba/smb.conf
 
   ##
   # GLOBAL CONFIGURATION

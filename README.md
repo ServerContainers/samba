@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2024-01-04
+    * fix for disabled nmbd #118
 * 2023-12-01
     * made `nmbd` optional use `NETBIOS_DISABLE=true` to disable nmbd
 * 2023-10-08
