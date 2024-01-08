@@ -49,6 +49,11 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2024-01-08
+    * multiline config for shares available
+        * optional
+        * better readability
+        * merged important parts from pull request #60 by hand
 * 2024-01-04
     * fix for disabled nmbd #118
 * 2023-12-01
@@ -186,6 +191,7 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
     * adds a new samba volume configuration
     * multiple variables/confgurations possible by adding unique configname to SAMBA_VOLUME_CONFIG_
     * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
+    * multiline support -> look into `docker-compose.yml` for example
     * seperate multiple lines using `;` which will be automatically translated to `\n`
     * if your path variable ends with `%U` e.g. `path = /shares/homes/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share. (great for timemachine - every user get's his own personal share)
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
