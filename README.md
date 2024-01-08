@@ -72,32 +72,6 @@ _all of those variants are automatically build and generated in one go_
     * create all groups, than create all users, and after that add users to groups - this gives a more clear and clean way to add users to different groups
 * 2023-07-29
     * added `vfs objects = catia fruit streams_xattr` to global config to improve macos compatibility - closes issue #93
-* 2023-05-17
-    * removed `fruit:advertise_fullsync` which doesn't exist
-* 2023-04-20
-    * added `testparm -s` to check config before starting - closes issue #81
-    * removed `socket options`, let the systems negotiate
-* 2023-04-11
-    * fixed pid bug on container restarts
-* 2023-03-20
-    * github action to build container
-    * implemented ghcr.io as new registry
-* 2023-03-15
-    * switched from docker hub to a build-yourself container
-* 2023-02-06
-    * fixed capitalization of username while hashing - convert to lowercase
-* 2022-12-05
-    * fixed `SAMBA_GLOBAL_CONFIG_...` with colon in the key.
-* 2022-05-31
-    * support for `server role` as ENV parameter
-* 2022-01-31
-    * support for global settings via stanza (similar to volume config)
-* 2022-01-28
-    * removed old `chmod 777, chown nodboy:nogroup` statements on multi user shares
-* 2022-01-20
-    * fixed healthcheck for container `avahi`
-* 2022-01-08
-    * better build script
 
 __older changelogs__ -> [CHANGELOGS.md](CHANGELOGS.md)
 
