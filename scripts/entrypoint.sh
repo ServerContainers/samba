@@ -251,6 +251,7 @@ if [ ! -f "$INITALIZED" ]; then
   done
 
   [ ! -z ${AVAHI_NAME+x} ] && echo ">> ZEROCONF: custom avahi samba.service name: $AVAHI_NAME" && sed -i 's/%h/'"$AVAHI_NAME"'/g' /etc/avahi/services/samba.service
+  [ ! -z ${AVAHI_NAME+x} ] && echo ">> ZEROCONF: custom avahi avahi-daemon.conf host-name: $AVAHI_NAME" && sed -i "s/#host-name=foo/host-name=${AVAHI_NAME}/" /etc/avahi/avahi-daemon.conf
 
   echo ">> ZEROCONF: samba.service file"
   echo "############################### START ####################################"
