@@ -51,6 +51,7 @@ _all of those variants are automatically build and generated in one go_
 
 * 2024-03-11
     * patch `host-name` in `/etc/avahi/avahi-daemon.conf` if `AVAHI_NAME` env is set
+    * fixed build - overwrite current version if there was a commit within last hour
 * 2024-01-08
     * multiline config for shares available
         * optional
