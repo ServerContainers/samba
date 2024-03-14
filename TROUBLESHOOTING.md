@@ -11,3 +11,14 @@ more infos about it here: https://github.com/ServerContainers/samba#volumes
 this way the container will not start the avahi daemon/mtls service and place the service file into the mounted folder.
 
 More comments/infos: https://github.com/ServerContainers/samba/issues/79
+
+
+# Problems with macOS and Windows / Docker Desktop
+
+You might run into troubles on macOS (confirmed) and maybe even Windows (I suspect there might me similar issues).
+
+It seems to me, that the filesystem mounts from the host to the container e.g. samba have problems with permissons etc.
+
+One user couldn't delete files on the share he mounted from his macbook. I retried this on a macbook and wasn't even able to create files.
+
+More comments/infos: https://github.com/ServerContainers/samba/issues/125 
