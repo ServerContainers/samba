@@ -49,6 +49,9 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2024-04-16
+    * added `tzdata` package to support setting the timezone using an env
+        * e.g. `TZ=Europe/Berlin`
 * 2024-03-22
     * merged pull request which fixed avahi on smbd-only and smbd-wsdd2 variants
         * solution was to just deactivate the avahi service and not remove the config folder

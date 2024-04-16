@@ -11,6 +11,7 @@ COPY --from=wsdd2-builder /wsdd2-master/wsdd2 /usr/sbin
 ENV PATH="/container/scripts:${PATH}"
 
 RUN apk add --no-cache runit \
+                       tzdata \
                        avahi \
                        samba \
  \
