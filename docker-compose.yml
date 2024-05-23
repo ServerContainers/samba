@@ -36,6 +36,8 @@ services:
 
       # example for hashed password (user: foo | password: bar) - generated using create-hash.sh script.
       ACCOUNT_foo: "foo:1000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:86C156FC198B358CCCF6278D8BD49B6A:[U          ]:LCT-61B0859A:"
+      # example for password hashes in the list format:
+      # - "ACCOUNT_foo=foo:1000:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX:8846F7EAEE8FB117AD06BDD830B7586C:[U          ]:LCT-5FE1F7DF:"
       UID_foo: 1002
       GROUPS_foo: family
 
