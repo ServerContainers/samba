@@ -49,6 +49,9 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2024-05-23
+    * updated github actions (see pull #131)
+    * fixed broken build/version
 * 2024-04-16
     * added `tzdata` package to support setting the timezone using an env
         * e.g. `TZ=Europe/Berlin`
