@@ -49,6 +49,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2024-05-27
+    * added `.dockerignore` to exlcude unnecessary files and history
 * 2024-05-23
     * updated github actions (see pull #131)
     * fixed broken build/version
