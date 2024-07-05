@@ -94,7 +94,9 @@ jobs:
 
       - name: Sign the published Docker image
         if: ${{ steps.docker_version_check.outputs.tag }}
-        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
 
 
       - name: Prepare Docker variations
@@ -117,7 +119,9 @@ jobs:
 
       - name: Sign the published Docker image - smbd-only
         if: ${{ steps.docker_version_check.outputs.tag }}
-        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push-smbd-only.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-only.outputs.digest }}
 
 
       - name: Build and push Docker image - smbd-avahi
@@ -135,7 +139,9 @@ jobs:
 
       - name: Sign the published Docker image - smbd-avahi
         if: ${{ steps.docker_version_check.outputs.tag }}
-        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push-smbd-avahi.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-avahi.outputs.digest }}
 
 
       - name: Build and push Docker image - smbd-wsdd2
@@ -153,4 +159,6 @@ jobs:
 
       - name: Sign the published Docker image - smbd-wsdd2
         if: ${{ steps.docker_version_check.outputs.tag }}
-        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push-smbd-wsdd2.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-wsdd2.outputs.digest }}
