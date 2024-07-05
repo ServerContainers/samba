@@ -94,8 +94,6 @@ jobs:
 
       - name: Sign the published Docker image
         if: ${{ steps.docker_version_check.outputs.tag }}
-        env:
-          COSIGN_EXPERIMENTAL: "true"
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
 
 
@@ -119,8 +117,6 @@ jobs:
 
       - name: Sign the published Docker image - smbd-only
         if: ${{ steps.docker_version_check.outputs.tag }}
-        env:
-          COSIGN_EXPERIMENTAL: "true"
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-only.outputs.digest }}
 
 
@@ -139,8 +135,6 @@ jobs:
 
       - name: Sign the published Docker image - smbd-avahi
         if: ${{ steps.docker_version_check.outputs.tag }}
-        env:
-          COSIGN_EXPERIMENTAL: "true"
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-avahi.outputs.digest }}
 
 
@@ -159,6 +153,4 @@ jobs:
 
       - name: Sign the published Docker image - smbd-wsdd2
         if: ${{ steps.docker_version_check.outputs.tag }}
-        env:
-          COSIGN_EXPERIMENTAL: "true"
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-wsdd2.outputs.digest }}
