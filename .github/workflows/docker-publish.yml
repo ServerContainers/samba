@@ -63,7 +63,7 @@ jobs:
       - name: New version needed?
         id: docker_version_check
         run: |
-          ./build.sh version-check && echo "tag=true" || echo "tag=false"
+          ./build.sh version-check && echo "tag=true" || echo "tag=false" >> $GITHUB_OUTPUT
 
       - name: Extract Docker Version Tag
         if: ${{ steps.docker_version_check.outputs.tag }}
