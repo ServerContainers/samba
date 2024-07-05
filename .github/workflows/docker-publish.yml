@@ -63,15 +63,10 @@ jobs:
       - name: New version needed?
         id: docker_version_check
         run: |
-          ./build.sh version-check 1>&2 && echo "tag=true" || echo "tag=false" >> $GITHUB_OUTPUT
-
-      - name: Check if new version is needed.
-        run: |
-          echo ${{ steps.docker_version_check.outputs.tag }} ${{ steps.docker_version_check.outputs.tag == 'true' }}
-
+          ./build.sh version-check && echo "tag=true" >> $GITHUB_OUTPUT || echo "tag=false" >> $GITHUB_OUTPUT
 
       - name: Extract Docker Version Tag
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ steps.docker_version_check.outputs.tag }}
         id: docker_version_tag
         run: |
           ./get-version.sh $(echo "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:" | tr '[:upper:]' '[:lower:]') | sed 's/^/tag=/g' >> $GITHUB_OUTPUT
@@ -82,7 +77,7 @@ jobs:
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ steps.docker_version_check.outputs.tag }}
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
@@ -95,12 +90,12 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Prepare Docker variations
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ steps.docker_version_check.outputs.tag }}
         run: |
           ./generate-variants.sh
 
       - name: Build and push Docker image - smbd-only
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ steps.docker_version_check.outputs.tag }}
         id: build-and-push-smbd-only
         uses: docker/build-push-action@v5
         with:
@@ -113,7 +108,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push Docker image - smbd-avahi
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ steps.docker_version_check.outputs.tag }}
         id: build-and-push-smbd-avahi
         uses: docker/build-push-action@v5
         with:
@@ -126,7 +121,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Build and push Docker image - smbd-wsdd2
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ steps.docker_version_check.outputs.tag }}
         id: build-and-push-smbd-wsdd2
         uses: docker/build-push-action@v5
         with:
