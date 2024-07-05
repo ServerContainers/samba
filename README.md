@@ -51,6 +51,7 @@ _all of those variants are automatically build and generated in one go_
 
 * 2024-07-05
     * improved github workflow - don't fail if it just skipped the build.
+    * sign images with cosign
 * 2024-05-27
     * added `.dockerignore` to exlcude unnecessary files and history
 * 2024-05-23
