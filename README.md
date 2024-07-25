@@ -4,6 +4,7 @@ samba on alpine
 
 with timemachine, zeroconf (`avahi`) and WSD (Web Services for Devices) (`wsdd2`) support.
 
+Note that there are issues regarding UID/GID Mapping on Docker Desktop - see: https://github.com/ServerContainers/samba/issues/125
 
 ## IMPORTANT!
 
