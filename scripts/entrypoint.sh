@@ -89,38 +89,67 @@ if [ ! -f "$INITALIZED" ]; then
   done
 
   ##
-  # Create GROUPS
+  # Create user accounts
   ##
-  for I_CONF in $(env | grep '^GROUP_')
-  do
+  
+  for I_ACCOUNT in $(env | grep '^ACCOUNT_'); do
+    ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
+    ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
+
+    ACCOUNT_UID=$(env | grep '^UID_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
+
+    # Attempt to add the user and capture any errors
+    ADDUSER_OUTPUT=$(adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME" 2>&1)
+
+    if echo "$ADDUSER_OUTPUT" | grep -q "uid '$ACCOUNT_UID' in use"; then
+      echo ">> ACCOUNT: User with UID $ACCOUNT_UID already exists. Attempting to find and delete the existing user."
+
+      # Correctly find the existing username using getent
+      EXISTING_USER=$(getent passwd "$ACCOUNT_UID" | cut -d: -f1)
+      
+      # Only delete if a user was found
+      if [ -n "$EXISTING_USER" ]; then
+        deluser "$EXISTING_USER"
+        echo ">> ACCOUNT: Deleted user $EXISTING_USER with UID $ACCOUNT_UID."
+      else
+        echo ">> ACCOUNT: No existing user found with UID $ACCOUNT_UID. Attempting alternative removal method."
+
+        # Try to remove the user by UID directly if username retrieval fails
+        USER_HOME=$(getent passwd | awk -F: -v uid="$ACCOUNT_UID" '$3 == uid {print $6}')
+        if [ -n "$USER_HOME" ]; then
+          echo ">> ACCOUNT: Removing user home directory: $USER_HOME"
+          rm -rf "$USER_HOME"
+        fi
+
+        # Force removal by directly modifying /etc/passwd and /etc/shadow if necessary
+        sed -i "/^[^:]*:[^:]*:$ACCOUNT_UID:/d" /etc/passwd
+        sed -i "/^[^:]*:[^:]*:$ACCOUNT_UID:/d" /etc/shadow
+        echo ">> ACCOUNT: Manually removed entries for UID $ACCOUNT_UID."
+      fi
+
+      # Retry adding the user
+      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
+      echo ">> ACCOUNT: adding account $ACCOUNT_NAME with GID: $ACCOUNT_UID"
+
+    else
+      echo ">> ACCOUNT: adding account $ACCOUNT_NAME with GID: $ACCOUNT_UID"
+    fi
+    
+  ##
+  # Create groups
+  ##
+
+  for I_CONF in $(env | grep '^GROUP_'); do
     GROUP_NAME=$(echo "$I_CONF" | sed 's/^GROUP_//g' | sed 's/=.*//g')
     GROUP_ID=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> GROUP: adding group $GROUP_NAME with GID: $GROUP_ID"
     addgroup -g "$GROUP_ID" "$GROUP_NAME"
   done
 
-  ##
-  # Create USER ACCOUNTS
-  ##
-  for I_ACCOUNT in $(env | grep '^ACCOUNT_')
-  do
-    ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
-    ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
+  # Create SMB password for the user
+  smbpasswd -a -n "$ACCOUNT_NAME"
 
-    ACCOUNT_UID=$(env | grep '^UID_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
-
-    if [ "$ACCOUNT_UID" -gt 0 ] 2>/dev/null
-    then
-      echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
-      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
-    else
-      echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-      adduser -D -H -s /bin/false "$ACCOUNT_NAME"
-    fi
-    smbpasswd -a -n "$ACCOUNT_NAME"
-
-    if echo "$ACCOUNT_PASSWORD" | grep ':$' | grep '^'"$ACCOUNT_NAME"':[0-9]*:'  >/dev/null 2>/dev/null
-    then
+    if echo "$ACCOUNT_PASSWORD" | grep ':$' | grep '^'"$ACCOUNT_NAME"':[0-9]*:' >/dev/null 2>/dev/null; then
       echo ">> ACCOUNT: found SMB Password HASH instead of plain-text password"
       CLEAN_HASH=$(echo "$ACCOUNT_PASSWORD" | sed 's/^.*:[0-9]*://g')
       sed -i 's/\('"$ACCOUNT_NAME"':[0-9]*:\).*/\1'"$CLEAN_HASH"'/g' /var/lib/samba/private/smbpasswd
@@ -128,13 +157,14 @@ if [ ! -f "$INITALIZED" ]; then
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd "$ACCOUNT_NAME"
     fi
-    
+
     smbpasswd -e "$ACCOUNT_NAME"
   done
-
+  
   ##
   # Add USER ACCOUNTS to GROUPS
   ##
+  
   for I_ACCOUNT in $(env | grep '^ACCOUNT_')
   do
     ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
