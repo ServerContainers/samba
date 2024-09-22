@@ -1,5 +1,3 @@
-version: '3'
- 
 # docker-compose.yml example for https://github.com/ServerContainers/samba
 
 services:
@@ -14,6 +12,9 @@ services:
     #cap_add:
     #  - CAP_NET_ADMIN
     environment:
+      # uncomment to enable fail fast (currently only fails fast if there are conflicts/errors during user/group creation)
+      #FAIL_FAST: 1
+
       MODEL: 'TimeCapsule'
       AVAHI_NAME: StorageServer
 

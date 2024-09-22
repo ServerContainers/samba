@@ -88,6 +88,9 @@ if [ ! -f "$INITALIZED" ]; then
     echo '   '"$CONF_KEY_VALUE"' = '"$CONF_CONF_VALUE"  >> /etc/samba/smb.conf
   done
 
+  # FAIL FAST START
+  [ ! -z ${FAIL_FAST+x} ] && set -e
+
   ##
   # Create GROUPS
   ##
@@ -148,6 +151,10 @@ if [ ! -f "$INITALIZED" ]; then
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
   done
+
+  [ ! -z ${FAIL_FAST+x} ] && set +e
+  # FAIL FAST END
+
 
   echo '' >> /etc/samba/smb.conf
 
