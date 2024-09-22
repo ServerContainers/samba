@@ -50,6 +50,9 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2024-09-22
+    * fixed filename handling for names with special chars
+    * `mangled names = no; dos charset = CP850; unix charset = UTF-8`
 * 2024-07-05
     * improved github workflow - don't fail if it just skipped the build.
     * sign images with cosign
