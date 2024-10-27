@@ -110,7 +110,7 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_GROUPS=$(env | grep '^GROUPS_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
     for GRP in $(echo "$ACCOUNT_GROUPS" | tr ',' '\n' | grep .); do
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME to group: $GRP"
-      addgroup "$ACCOUNT_NAME" "$GRP"
+      usermod -aG "$GRP" "$ACCOUNT_NAME"
     done
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
