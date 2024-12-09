@@ -1,6 +1,6 @@
 #!/bin/sh -x
 
-tar cf variants.tar --exclude .git/ --exclude variants.tar .
+tar cf variants.tar --exclude-ignore=.dockerignore .
 
 mkdir -p variants/smbd-only variants/smbd-avahi variants/smbd-wsdd2
 
