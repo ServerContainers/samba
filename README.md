@@ -115,7 +115,7 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
     * _optional_
     * default not set
     * use it to manage multiple global settings in one place
-    * seperate multiple settings/lines using `;` which will be automatically translated to `\n`
+    * separate multiple settings/lines using `;` which will be automatically translated to `\n`
 
 *  __SAMBA\_GLOBAL\_CONFIG\_someuniquevalue__
     * add any global samba config to `smb.conf`
@@ -152,7 +152,7 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
     * additional groups for the user
     * to create groups look at `GROUP_groupname` or mount/inject /etc/groups file (can cause problems)
     * the `username` part must match to a specified `ACCOUNT_username` environment variable
-    * one or more groups to add seperated by a `,`
+    * one or more groups to add separated by a `,`
     * example: `GROUPS_johndoe=musican,devops`
 
 * __MODEL__
@@ -193,7 +193,7 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
     * multiple variables/confgurations possible by adding unique configname to SAMBA_VOLUME_CONFIG_
     * take a look at https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X -> EXPLANATION OF VOLUME PARAMETERS
     * multiline support -> look into `docker-compose.yml` for example
-    * seperate multiple lines using `;` which will be automatically translated to `\n`
+    * separate multiple lines using `;` which will be automatically translated to `\n`
     * if your path variable ends with `%U` e.g. `path = /shares/homes/%U;` multi user mode gets activated and each user gets their own subdirectory for their own share. (great for timemachine - every user get's his own personal share)
     * for timemachine only add `fruit:time machine = yes` and all other needed settings are automatically added
         * you can also use `fruit:time machine max size = 500G;` to limit max size of time machine volume
