@@ -5,6 +5,11 @@ IMG="$DOCKER_REGISTRY/samba"
 PLATFORM="linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6"
 
 rm -rf variants.tar variants/ 2>/dev/null >/dev/null
+if [ -f "variants.tar" ] || [ -d "variants" ] ; then
+  >&2 echo "error - remove variants.tar or variants/ manually:"
+  echo "  rm -rf variants.tar variants/"
+  exit 1
+fi
 
 TAG=$(./get-version.sh)
 
