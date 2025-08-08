@@ -50,6 +50,12 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2025-08-08
+    * removed `[global]` setting `vfs objects = streams_xattr`
+        * people seem to have more problems with it than it helps
+        * more infos about this setting: `https://www.samba.org/samba/docs/current/man-html/vfs_streams_xattr.8.html`
+        * to restore the old configuration add `vfs objects = catia fruit streams_xattr` to each share
+        * this should fix bug #125 - maybe other bugs as well
 * 2024-09-22
     * fixed filename handling for names with special chars
         * `mangled names = no; dos charset = CP850; unix charset = UTF-8`
