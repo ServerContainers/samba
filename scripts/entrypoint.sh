@@ -33,6 +33,24 @@ if [ ! -f "$INITALIZED" ]; then
   cp /container/config/avahi/samba.service /etc/avahi/services/samba.service
 
   ##
+  # FRUIT DISABLE
+  ##
+  if [ ! -z ${DISABLE_FRUIT_DEFAULTS+x} ]
+  then
+    echo ">> SPECIAL MODE: disable fruit configuration / auto timemachine support - use only for special configurations"
+    if env | grep "fruit:time machine" 2>/dev/null > /dev/null; then
+        set -e
+        echo ">> SPECIAL MODE ERROR: you disabled fruit but configured 'fruit:time machine' - not allowed - exit error"
+        exit 1
+    fi
+    echo ">> SPECIAL MODE: deleting all lines in smb.conf with 'fruit::', 'vfs objects', 'ea support'"
+    sed -i -E '/fruit::|vfs objects|ea support/d' /etc/samba/smb.conf
+    echo ">> SPECIAL MODE: you can use env variables to have your custom global config - they will be added after this deletion job"
+  fi
+
+
+
+  ##
   # MAIN CONFIGURATION
   ##
   if [ ! -z ${SAMBA_CONF_SERVER_ROLE+x} ]
@@ -236,12 +254,10 @@ if [ ! -f "$INITALIZED" ]; then
     if echo "$CONF_CONF_VALUE" | sed 's/;/\n/g' | grep 'fruit:time machine' | grep yes 2>/dev/null >/dev/null;
     then
         echo "  >> TIMEMACHINE: adding samba timemachine specifics to volume config: $VOL_NAME ($VOL_PATH)"
-        echo ' fruit:metadata = stream
- durable handles = yes
+        echo ' durable handles = yes
  kernel oplocks = no
  kernel share modes = no
  posix locking = no
- ea support = yes
  inherit acls = yes
 ' >> /etc/samba/smb.conf
     fi

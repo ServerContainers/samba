@@ -50,7 +50,21 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2025-09-02
+    * improved `[global]` setting `vfs objects = streams_xattr`
+        * `streams_xattr` is needed for macOS / iOS integration
+        * fixed broken vfs objects fruit configuration
+        * see: https://www.samba.org/samba/docs/current/man-html/vfs_fruit.8.html
+        * more about that bug: https://github.com/ServerContainers/samba/issues/125
+        * general cleanup of global fruit configuration
+        * bug #125 reopened
+    * added new environment variable `DISABLE_FRUIT_DEFAULTS` to disable all fruit extention
+        * a way to hopefully fix https://github.com/ServerContainers/samba/issues/125
+        * negative effects for macOS / iOS / iPadOS clients etc. use safely if you don't use these devices
+        * should make this container work on special underlaying filesystems
+        * default not set
 * 2025-08-08
+    * Update: WARNING the following statement was wrong! - it broke the fruit configuration
     * removed `[global]` setting `vfs objects = streams_xattr`
         * people seem to have more problems with it than it helps
         * more infos about this setting: `https://www.samba.org/samba/docs/current/man-html/vfs_streams_xattr.8.html`
@@ -116,6 +130,15 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
 ## Environment variables and defaults
 
 ### Samba
+
+*  __DISABLE\_FRUIT\_DEFAULTS__
+    * _optional_
+    * default not set - set to any value to enable
+    * will reduce all settings which help apple devices (tags, metadata, timmachine etc.)
+    * will fail if timemachine is enabled
+    * try this, if you have troubles with your shares
+        * you experience the same problems as in this bug https://github.com/ServerContainers/samba/issues/125
+        * might work on proxmox, if underlaying shares are not a normal filesystems etc.
 
 *  __SAMBA\_GLOBAL\_STANZA__
     * _optional_
