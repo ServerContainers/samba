@@ -50,6 +50,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2025-11-21
+    * added `AVAHI_INTERFACES` env to control avahi configuration option: `allow-interfaces`
 * 2025-09-02
     * improved `[global]` setting `vfs objects = streams_xattr`
         * `streams_xattr` is needed for macOS / iOS integration
@@ -196,6 +198,10 @@ If you experience Problems, take a look at this file: [TROUBLESHOOTING.md](TROUB
 * __AVAHI\_NAME__
     * _optional_ name of avahi samba service
     * _default:_ _hostname_
+
+* __AVAHI\_INTERFACES__
+    * _optional_ set value for avahis `allow-interfaces` config option.
+    * _default:_ listens to all interfaces
 
 * __AVAHI\_DISABLE__
     * _optional_
