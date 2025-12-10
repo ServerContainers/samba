@@ -99,7 +99,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Sign the published Docker image
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ (steps.docker_version_check.outputs.tag == 'true') && (github.event_name != 'pull_request') }}
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
 
 
@@ -122,7 +122,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Sign the published Docker image - smbd-only
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ (steps.docker_version_check.outputs.tag == 'true') && (github.event_name != 'pull_request') }}
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-only.outputs.digest }}
 
 
@@ -140,7 +140,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Sign the published Docker image - smbd-avahi
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ (steps.docker_version_check.outputs.tag == 'true') && (github.event_name != 'pull_request') }}
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-avahi.outputs.digest }}
 
 
@@ -158,5 +158,5 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Sign the published Docker image - smbd-wsdd2
-        if: ${{ steps.docker_version_check.outputs.tag == 'true' }}
+        if: ${{ (steps.docker_version_check.outputs.tag == 'true') && (github.event_name != 'pull_request') }}
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-smbd-wsdd2.outputs.digest }}
