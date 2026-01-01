@@ -117,7 +117,7 @@ if [ ! -f "$INITALIZED" ]; then
     GROUP_NAME=$(echo "$I_CONF" | sed 's/^GROUP_//g' | sed 's/=.*//g')
     GROUP_ID=$(echo "$I_CONF" | sed 's/^[^=]*=//g')
     echo ">> GROUP: adding group $GROUP_NAME with GID: $GROUP_ID"
-    addgroup -g "$GROUP_ID" "$GROUP_NAME"
+    groupadd -g "$GROUP_ID" "$GROUP_NAME"
   done
 
   ##
@@ -133,10 +133,10 @@ if [ ! -f "$INITALIZED" ]; then
     if [ "$ACCOUNT_UID" -gt 0 ] 2>/dev/null
     then
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME with UID: $ACCOUNT_UID"
-      adduser -D -H -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
+      useradd -u "$ACCOUNT_UID" -s /bin/false "$ACCOUNT_NAME"
     else
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME"
-      adduser -D -H -s /bin/false "$ACCOUNT_NAME"
+      useradd -s /bin/false "$ACCOUNT_NAME"
     fi
     smbpasswd -a -n "$ACCOUNT_NAME"
 
@@ -164,7 +164,7 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_GROUPS=$(env | grep '^GROUPS_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
     for GRP in $(echo "$ACCOUNT_GROUPS" | tr ',' '\n' | grep .); do
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME to group: $GRP"
-      addgroup "$ACCOUNT_NAME" "$GRP"
+      usermod -aG "$GRP" "$ACCOUNT_NAME"
     done
 
     unset $(echo "$I_ACCOUNT" | cut -d'=' -f1)
