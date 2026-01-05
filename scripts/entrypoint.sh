@@ -128,7 +128,7 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
     ACCOUNT_PASSWORD=$(echo "$I_ACCOUNT" | sed 's/^[^=]*=//g')
 
-    ACCOUNT_UID=$(env | grep '^UID_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
+    ACCOUNT_UID=$(env | grep '^UID_'"$ACCOUNT_NAME"'=' | sed 's/^[^=]*=//g')
 
     if [ "$ACCOUNT_UID" -gt 0 ] 2>/dev/null
     then
@@ -161,7 +161,7 @@ if [ ! -f "$INITALIZED" ]; then
     ACCOUNT_NAME=$(echo "$I_ACCOUNT" | cut -d'=' -f1 | sed 's/ACCOUNT_//g' | tr '[:upper:]' '[:lower:]')
 
     # add user to groups...
-    ACCOUNT_GROUPS=$(env | grep '^GROUPS_'"$ACCOUNT_NAME" | sed 's/^[^=]*=//g')
+    ACCOUNT_GROUPS=$(env | grep '^GROUPS_'"$ACCOUNT_NAME"'=' | sed 's/^[^=]*=//g')
     for GRP in $(echo "$ACCOUNT_GROUPS" | tr ',' '\n' | grep .); do
       echo ">> ACCOUNT: adding account: $ACCOUNT_NAME to group: $GRP"
       addgroup "$ACCOUNT_NAME" "$GRP"

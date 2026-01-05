@@ -50,6 +50,8 @@ _all of those variants are automatically build and generated in one go_
 
 ## Changelogs
 
+* 2026-01-05
+    * fixed userId handling for similiar starting userids (e.g. `john johnd joh`) and also fixed #171
 * 2025-11-21
     * added `AVAHI_INTERFACES` env to control avahi configuration option: `allow-interfaces`
 * 2025-09-02
