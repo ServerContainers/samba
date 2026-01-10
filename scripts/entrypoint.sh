@@ -30,7 +30,7 @@ if [ ! -f "$INITALIZED" ]; then
   echo ">> CONTAINER: starting initialisation"
 
   cp /container/config/samba/smb.conf /etc/samba/smb.conf
-  cp /container/config/avahi/samba.service /etc/avahi/services/samba.service
+  [ ! -z ${AVAHI_DISABLE+x} ] || cp /container/config/avahi/samba.service /etc/avahi/services/samba.service
 
   ##
   # FRUIT DISABLE
@@ -149,7 +149,7 @@ if [ ! -f "$INITALIZED" ]; then
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd "$ACCOUNT_NAME"
     fi
-    
+
     smbpasswd -e "$ACCOUNT_NAME"
   done
 
@@ -182,7 +182,7 @@ if [ ! -f "$INITALIZED" ]; then
   [ -z ${MODEL+x} ] && MODEL="TimeCapsule"
   sed -i 's/TimeCapsule/'"$MODEL"'/g' /etc/samba/smb.conf
 
-  if ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
+  if [ -f /etc/avahi/services/samba.service ] && ! grep '<txt-record>model=' /etc/avahi/services/samba.service 2> /dev/null >/dev/null;
   then
     # remove </service-group>
     sed -i '/<\/service-group>/d' /etc/avahi/services/samba.service
@@ -262,7 +262,7 @@ if [ ! -f "$INITALIZED" ]; then
 ' >> /etc/samba/smb.conf
     fi
 
-    if echo "$VOL_PATH" | grep '%U$' 2>/dev/null >/dev/null; 
+    if echo "$VOL_PATH" | grep '%U$' 2>/dev/null >/dev/null;
     then
       VOL_PATH_BASE=$(echo "$VOL_PATH" | sed 's,/%U$,,g')
       echo "  >> multiuser volume - $VOL_PATH"
@@ -277,16 +277,20 @@ if [ ! -f "$INITALIZED" ]; then
   [ ! -z ${AVAHI_NAME+x} ] && echo ">> ZEROCONF: custom avahi avahi-daemon.conf host-name: $AVAHI_NAME" && sed -i "s/#host-name=.*/host-name=${AVAHI_NAME}/" /etc/avahi/avahi-daemon.conf
   [ ! -z ${AVAHI_INTERFACES+x} ] && echo ">> ZEROCONF: custom avahi avahi-daemon.conf allow-interfaces: $AVAHI_INTERFACES" && sed -i "s/#allow-interfaces=.*/allow-interfaces=${AVAHI_INTERFACES}/" /etc/avahi/avahi-daemon.conf
 
-  echo ">> ZEROCONF: samba.service file"
-  echo "############################### START ####################################"
-  cat /etc/avahi/services/samba.service
-  echo "################################ END #####################################"
+  if [ -z ${AVAHI_DISABLE+x} ]
+  then
+    echo ">> ZEROCONF: samba.service file"
+    echo "############################### START ####################################"
+    cat /etc/avahi/services/samba.service
+    echo "################################ END #####################################"
+  else
+    echo ">> AVAHI - DISABLED"
+    rm -rf /container/config/runit/avahi
+  fi
 
   [ ! -z ${WSDD2_PARAMETERS+x} ] && echo ">> WSDD2: custom parameters for wsdd2 daemon: wsdd2 $WSDD2_PARAMETERS" && sed -i 's/wsdd2/wsdd2 '"$WSDD2_PARAMETERS"'/g' /container/config/runit/wsdd2/run
 
   [ ! -z ${WSDD2_DISABLE+x} ] && echo ">> WSDD2 - DISABLED" && rm -rf /container/config/runit/wsdd2
-
-  [ ! -z ${AVAHI_DISABLE+x} ] && echo ">> AVAHI - DISABLED" && rm -rf /container/config/runit/avahi
 
   [ ! -z ${NETBIOS_DISABLE+x} ] && echo ">> NETBIOS - DISABLED" && rm -rf /container/config/runit/nmbd
 
@@ -300,7 +304,7 @@ if [ ! -f "$INITALIZED" ]; then
     echo ">> EXTERNAL AVAHI: list of services"
     ls -l /external/avahi/*.service
   fi
-  
+
   echo ""
   echo ">> SAMBA: check smb.conf file using 'testparm -s'"
   echo "############################### START ####################################"
