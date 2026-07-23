@@ -1,3 +1,7 @@
 .git
-variants
+.github
+variants/**
+
+.gitignore
+docker-compose*.yml
 variants.tar
