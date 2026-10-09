@@ -1,0 +1,8 @@
+[
+  {
+    "id": "refresh",
+    "execute-command": "/container/scripts/register-dynamic.sh",
+    "command-working-directory": "/container/scripts",
+    "include-command-output-in-response": true
+  }
+]

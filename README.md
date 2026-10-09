@@ -320,3 +320,33 @@ Note: _This `wsdd2` service seems to need `CAP_NET_ADMIN` as a capability. (more
     cap_add:
       - CAP_NET_ADMIN
 ```
+
+## Dynamic Volumes
+
+Added support to add dynamic volumes to the samba configuration. A directory mapped to volume '/dynamic-volumes' is monitored for files and directories added. Directories are automatically mounted and shared. Added this functionality to share automounted USB drives. There are 2 types of files monitored:
+
+* __\<name\>.share__
+    * Format: INI file
+    * Adds content to samba config. Should only contain samba shares (check smb.conf for format)
+
+* __directory.template__
+    * Format: INI file
+    * Default configuration for directories added to '/dynamic-volumes'
+    * Values added to the [global] section are added to all directories. If a custom config is needed for a directory just add values to a section with the same name as the directory (values in [global] will be added as well).
+
+Environment variables added:
+
+* __SAMBA\_DYNAMIC\_VOLUMES__
+    * _optional_
+    * default: disabled
+    * flag to enable dynamic volume monitoring. Valid values: enabled|true|yes
+* __SAMBA\_DYNAMIC\_WEBHOOK\_PORT__
+    * _optional_
+    * default: 9000
+    * webhook used to manually refresh dynamic volumes, address is http://\<server\>/hooks/refresh
+
+* __SAMBA\_DYNAMIC\_INTERVAL__
+    * _optional_
+    * default: 1 (0 to disable monitoring)
+    * Monitoring interval for checking changes to the dynamic volume directory (minutes). If monitoring is disabled the only way to refresh volumes is by calling the webhook.
+

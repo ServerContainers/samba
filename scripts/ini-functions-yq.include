@@ -1,0 +1,142 @@
+#!/bin/sh
+
+# yq has a problem when INI keys have a colon in the name
+# when they fix it I'll replace crudini with yq
+
+############################
+# FILENAME FUNCTIONS
+############################
+
+INI_PARSER="yq --input-format ini --output-format ini"
+
+filename(){
+        local FILENAME=$(basename "$1")
+        echo "${FILENAME%.*}"
+}
+
+extname(){
+        local FILENAME=$(basename "$1")
+        local EXTNAME="${FILENAME##*.}"
+        #
+        if [ "$FILENAME" = "$EXTNAME" ]; then
+                echo ""
+        else
+                echo "$EXTNAME"
+        fi
+}
+
+############################
+# INI FUNCTIONS
+############################
+
+ini_valid(){
+	local SOURCE="$1"
+	# save sections to file
+	if ! $INI_PARSER "." "$SOURCE" > /dev/null 2>&1; then
+		return 1
+	else
+		return 0
+	fi
+}
+
+ini_list_sections(){
+	local SOURCE="$1"
+	$INI_PARSER ".[] | key" "$SOURCE" 2> /dev/null
+}
+
+ini_has_section(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	#
+	if $INI_PARSER ". | has(\"$SECTION\")" "$SOURCE" | grep "true" > /dev/null 2>&1; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+ini_print_section(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	#
+	$INI_PARSER ".[\"$SECTION\"]" "$SOURCE"
+}
+
+ini_del_section(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	#
+	$INI_PARSER -i "del(.[\"$SECTION\"])" "$SOURCE"
+}
+
+ini_list_keys(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	#
+	$INI_PARSER ".[\"$SECTION\"].[] | key" "$SOURCE"
+}
+
+ini_get_key(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	local KEY="$3"
+	local DEF="$4"
+	local VALUE=$($INI_PARSER ".[\"$SECTION\"].[\"$KEY\"]" "$SOURCE")
+	if [ "$VALUE" = "null" ]; then
+		echo "$DEF"
+	else
+		echo "$VALUE"
+	fi
+}
+
+ini_is_key(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	local KEY="$3"
+	local TEST_VALUE="$4"
+	local CURR_VALUE=$($INI_PARSER ".[\"$SECTION\"].[\"$KEY\"]" "$SOURCE")
+	#
+	if [ "$TEST_VALUE" = "$CURR_VALUE" ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
+ini_set_key(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	local KEY="$3"
+	local VALUE="$4"
+	#
+	$INI_PARSER -i ".[\"$SECTION\"].[\"$KEY\"]=\"$VALUE\"" "$SOURCE"
+}
+
+ini_del_key(){
+	local SOURCE="$1"
+	local SECTION="$2"
+	local KEY="$3"
+	local VALUE="$4"
+	#
+	$INI_PARSER -i "del(.[\"$SECTION\"].[\"$KEY\"])" "$SOURCE"
+}
+
+ini_copy_section(){
+	local FROM_FILE="$1"
+	local FROM_SECTION="$2"
+	local TO_FILE="$3"
+	local TO_SECTION="$4"
+	local EXCLUDE="$5"
+	#
+	if [ -f "$FROM_FILE" ] && [ -z "$EXCLUDE" ]; then
+		ini_list_keys "$FROM_FILE" "$FROM_SECTION" | while IFS= read -r KEY ; do
+			VALUE=$(ini_get_key "$FROM_FILE" "$FROM_SECTION" "$KEY")
+			ini_set_key "$TO_FILE" "$TO_SECTION" "$KEY" "$VALUE"
+		done
+	elif [ -f "$FROM_FILE" ]; then
+		ini_list_keys "$FROM_FILE" "$FROM_SECTION" | grep -v -E "$EXCLUDE" | while IFS= read -r KEY ; do
+			VALUE=$(ini_get_key "$FROM_FILE" "$FROM_SECTION" "$KEY")
+			ini_set_key "$TO_FILE" "$TO_SECTION" "$KEY" "$VALUE"
+		done
+	fi
+}

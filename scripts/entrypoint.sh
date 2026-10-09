@@ -149,7 +149,7 @@ if [ ! -f "$INITALIZED" ]; then
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | passwd "$ACCOUNT_NAME"
       echo -e "$ACCOUNT_PASSWORD\n$ACCOUNT_PASSWORD" | smbpasswd "$ACCOUNT_NAME"
     fi
-    
+
     smbpasswd -e "$ACCOUNT_NAME"
   done
 
@@ -300,7 +300,7 @@ if [ ! -f "$INITALIZED" ]; then
     echo ">> EXTERNAL AVAHI: list of services"
     ls -l /external/avahi/*.service
   fi
-  
+
   echo ""
   echo ">> SAMBA: check smb.conf file using 'testparm -s'"
   echo "############################### START ####################################"
@@ -319,6 +319,50 @@ if [ ! -f "$INITALIZED" ]; then
 else
   echo ">> CONTAINER: already initialized - direct start of samba"
 fi
+
+##################################################
+# START - DYNAMIC VOLUMES
+##################################################
+
+if [ -z "$SAMBA_DYNAMIC_WEBHOOK_PORT" ]; then
+  SAMBA_DYNAMIC_WEBHOOK_PORT=9000
+fi
+
+case "$SAMBA_DYNAMIC_INTERVAL" in
+    "")
+	# interval not set, check every minute
+	SAMBA_DYNAMIC_INTERVAL=1
+        ;;
+    *[!0-9]*)
+	# interval not a positive number, check every minute
+	SAMBA_DYNAMIC_INTERVAL=1
+        ;;
+esac
+
+LABEL="minutes"
+if [ "$SAMBA_DYNAMIC_INTERVAL" -lt 2 ]; then
+  LABEL="minute"
+fi
+
+if echo "$SAMBA_DYNAMIC_VOLUMES" | grep -i -E "^(enabled|yes|y|true)$" > /dev/null; then
+  echo ">> DYNAMIC-VOLUMES: Enabled"
+  # register static shares defined in docker compose file
+  /container/scripts/register-static.sh
+  # check interval value
+  if [ "$SAMBA_DYNAMIC_INTERVAL" -eq 0 ]; then
+    echo ">> DYNAMIC-VOLUMES: Monitoring disabled, use webhook to reload config"
+  else
+    echo ">> DYNAMIC-VOLUMES: Monitoring enabled, checking every $SAMBA_DYNAMIC_INTERVAL $LABEL"
+    # set cron job to monitor /dynamic-volumes directory for shares
+    echo "*/$SAMBA_DYNAMIC_INTERVAL * * * * /container/scripts/register-dynamic.sh" >> /etc/crontabs/root
+  fi
+else
+  echo ">> DYNAMIC-VOLUMES: Disabled"
+fi
+
+##################################################
+# END - DYNAMIC VOLUMES
+##################################################
 
 ##
 # CMD

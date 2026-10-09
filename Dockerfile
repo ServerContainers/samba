@@ -24,9 +24,24 @@ RUN apk add --no-cache runit \
  && touch /external/avahi/not-mounted \
  && echo done
 
+###########################
+# DYNAMIC VOLUMES STUFF
+###########################
+RUN mkdir -p /dynamic-volumes
+#RUN apk add --no-cache webhook moreutils yq
+RUN apk add --no-cache webhook moreutils py3-pip
+RUN pip install crudini --break-system-packages
+###########################
+
 VOLUME ["/shares"]
 
-EXPOSE 137/udp 139 445
+# udp port 137: Netbios Name Service
+# udp port 138: Netbios Datagram Service
+# tcp port 139: SMB for Windows NT or older
+# tcp port 445: SMB for Windows 2000 or newer
+# tcp port 9000: Webhook
+
+EXPOSE 137/udp 138/udp 139 445 9000
 
 COPY . /container/
 
